@@ -13,16 +13,14 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>RouteFinder</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
         <java.version>11</java.version>
-        <vaadin.version>14.0.9</vaadin.version>
     </properties>
-
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -30,65 +28,31 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
+        <!--     <dependency>-->
+        <!--         <groupId>org.springframework.boot</groupId>-->
+        <!--         <artifactId>spring-boot-starter-security</artifactId>-->
+        <!--     </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-                    <groupId>com.google.api-client</groupId>
-                    <artifactId>google-api-client</artifactId>
-                    <version>1.30.2</version>
-                </dependency>
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!--     <dependency>-->
+        <!--         <groupId>org.springframework.boot</groupId>-->
+        <!--         <artifactId>spring-boot-starter-test</artifactId>-->
+        <!--         <scope>test</scope>-->
+        <!--     </dependency>-->
+        <!--     <dependency>-->
+        <!--         <groupId>org.springframework.security</groupId>-->
+        <!--         <artifactId>spring-security-test</artifactId>-->
+        <!--         <scope>test</scope>-->
+        <!--     </dependency>-->
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-bom</artifactId>
-                <version>${vaadin.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
@@ -97,5 +61,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
