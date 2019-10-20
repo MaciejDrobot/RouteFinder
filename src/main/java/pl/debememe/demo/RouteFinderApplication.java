@@ -8,6 +8,9 @@ public class RouteFinderApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RouteFinderApplication.class, args);
+
+
+        System.out.println("test");
     }
 
 }
