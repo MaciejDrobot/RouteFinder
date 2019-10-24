@@ -1,7 +1,6 @@
 package pl.debememe.demo.maps;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import pl.debememe.demo.movie.Movie;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class LocationsResponse {
     private String totalResults;
 
     @JsonProperty("Search")
-    private List<Locations> search;
+    private List<Location> search;
 
     @JsonProperty("Response")
     private String response;
@@ -23,11 +22,11 @@ public class LocationsResponse {
         this.totalResults = totalResults;
     }
 
-    public List<Locations> getSearch() {
+    public List<Location> getSearch() {
         return search;
     }
 
-    public void setSearch(List<Locations> search) {
+    public void setSearch(List<Location> search) {
         this.search = search;
     }
 

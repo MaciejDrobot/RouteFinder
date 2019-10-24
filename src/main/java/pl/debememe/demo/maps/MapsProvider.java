@@ -1,11 +1,8 @@
 package pl.debememe.demo.maps;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.debememe.demo.movie.Movie;
-import pl.debememe.demo.movie.SearchMovieResponse;
 
 import java.util.List;
 
@@ -37,12 +34,12 @@ public class MapsProvider {
                 + "&key=AIzaSyBV6hjFNhlm5eCfM3aO-jWz2LapYwza3rM";
     }
 
-    public List<Locations> getLocations(String searchQuery){
+    public List<Location> getLocations(String searchQuery){
         RestTemplate restTemplate = new RestTemplate();
         LocationsResponse forObject = restTemplate
                 .getForObject(query(Start, Finish), LocationsResponse.class);
 
-        List<Locations> search = forObject.getSearch();
+        List<Location> search = forObject.getSearch();
 
         return search;
     }
