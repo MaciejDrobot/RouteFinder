@@ -33,11 +33,11 @@
         </ul>
         <form class="form-inline my-2 my-lg-0"
               action="#"
-              th:object="${location}"
-              th:action="@{/showLocation}"
+              th:object="${route}"
+              th:action="@{/showRoute}"
               method="post">
-            <input class="form-control mr-sm-2" type="text" th:field="*{longitude}" placeholder="Longitude" aria-label="Search">
-            <input class="form-control mr-sm-2" type="text" th:field="*{latitude}" placeholder="Latitude"  aria-label="Search">
+            <input class="form-control mr-sm-2" type="text" th:field="*{start}" placeholder="Start" aria-label="Search">
+            <input class="form-control mr-sm-2" type="text" th:field="*{end}" placeholder="End"  aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>

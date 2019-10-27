@@ -1,0 +1,30 @@
+<div id="map">
+    <script>
+        function initMap() {
+            var directionsService = new google.maps.DirectionsService();
+            var directionsRenderer = new google.maps.DirectionsRenderer();
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: {lat: [[${latitude}]], lng: [[${longitude}]]},
+            });
+            directionsRenderer.setMap(map);
+            directionsService.route(
+                {
+                    origin: {query: [[${start}]]},
+                    destination: {query: [[${end}]]},
+                    travelMode: 'DRIVING'
+                },
+                function(response, status) {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(response);
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+        }
+    </script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBV6hjFNhlm5eCfM3aO-jWz2LapYwza3rM&callback=initMap">
+</script>
+</div>

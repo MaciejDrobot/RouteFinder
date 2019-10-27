@@ -15,19 +15,19 @@ public class MapsController {
     @RequestMapping("/home")
     public String showHomePage(Model model){
         String latitude = "58.400";
-        String longitude = "23.010";
+        String longitude = "22.010";
         model.addAttribute("latitude", latitude);
         model.addAttribute("longitude", longitude);
-        model.addAttribute("location", new Location());
+        model.addAttribute("route", new Route());
         return "home";
     }
 
     @PostMapping
-    @RequestMapping("/showLocation")
-    public String showLocation(@ModelAttribute Location location, Model model){
-        model.addAttribute("latitude", location.getLatitude());
-        model.addAttribute("longitude", location.getLongitude());
-        return "home";
+    @RequestMapping("/showRoute")
+    public String showRoute(@ModelAttribute Route route, Model model){
+        model.addAttribute("start", route.getStart());
+        model.addAttribute("end", route.getEnd());
+        return "directions";
     }
 
 
