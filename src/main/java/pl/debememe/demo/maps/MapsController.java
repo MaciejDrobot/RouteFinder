@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class MapsController {
 
-    MapsProvider mapsProvider;
+    LocationsProvider locationsProvider;
 
     @GetMapping
     @RequestMapping("/home")
