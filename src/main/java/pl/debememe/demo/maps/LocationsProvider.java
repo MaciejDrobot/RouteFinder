@@ -1,5 +1,6 @@
 package pl.debememe.demo.maps;
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,5 +28,7 @@ public class LocationsProvider {
         List<Location> search = forObject.getSearch();
         return search;
     }
+
+
 
 }
