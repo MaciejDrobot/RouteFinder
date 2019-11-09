@@ -15,6 +15,9 @@ public class RouteFinderApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(RouteFinderApplication.class, args);
+
+
+        System.out.println("test");
     }
 
     @Override
