@@ -1,5 +1,6 @@
 package pl.debememe.demo.strony;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,15 +17,20 @@ public class WeatherProvider {
     double lon = -0.11;
     private final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID=51079114e50559a6a1afc21bd1c24ea0&";
     private String API_KEY = "51079114e50559a6a1afc21bd1c24ea0";
-    public WeatherDTO getLatAndLon (double lat, double lon){
+
+    public WeatherDTO getLatAndLon(double lat, double lon) {
         RestTemplate restTemplate = new RestTemplate();
         String fullURL = WEATHER_URL + "lat=" + lat + "&lon=" + lon;
 
 
         HttpEntity<String> entity = createHttpEntity();
 
+        JsonNode forObject = restTemplate.getForObject(fullURL, JsonNode.class).get("main");
+        System.out.println(forObject.get("temp"));
         HttpEntity<WeatherDTO> response = restTemplate.exchange(fullURL, HttpMethod.GET, entity, WeatherDTO.class);
-        return response.getBody();
+        WeatherDTO body = response.getBody();
+        body.setTemp(forObject.get("temp").asDouble());
+        return body;
     }
 
     private HttpEntity<String> createHttpEntity() {
@@ -34,5 +40,17 @@ public class WeatherProvider {
         return new HttpEntity<>("parameters", headers);
     }
 
+//    public void getTemp(double lat, double lon) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        String fullURL = WEATHER_URL + "lat=" + lat + "&lon=" + lon;
+//
+//        HttpEntity<String> entity = createHttpEntity();
+//
+//        JsonNode forObject = restTemplate.getForObject(fullURL, JsonNode.class).get("main");
+//        for (JsonNode jsonNode : forObject) {
+//            System.out.println(jsonNode.get("temp") + "°C");
+//        }
+//
+//    }
 
 }

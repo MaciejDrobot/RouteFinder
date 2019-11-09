@@ -28,13 +28,10 @@ public class MapsController {
         model.addAttribute("latitude", "51.509865");
         model.addAttribute("longitude", "-0.118092");
         model.addAttribute("route", new Route());
-        //model.addAttribute("temperature", "10");
-
         double lat = 51.50;
         double lon = -0.11;
         model.addAttribute("temperature", weatherProvider.getLatAndLon(lat, lon).getTemp());
         System.out.println(weatherProvider.getLatAndLon(lat, lon).getTemp());
-
         return "index";
     }
 
@@ -46,14 +43,6 @@ public class MapsController {
         model.addAttribute("end", route.getEnd());
 
         return "directions";
-    }
-
-
-    @GetMapping
-    @RequestMapping("/getWeatherForDefaultCoordinates")
-    public String provideWeather(Model model) {
-        //model.addAttribute("temperature", "5");
-        return "index";
     }
 
 

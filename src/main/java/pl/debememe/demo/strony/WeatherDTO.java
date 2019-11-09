@@ -1,12 +1,27 @@
 package pl.debememe.demo.strony;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
+
 public class WeatherDTO {
 
+    @JsonProperty("name")
     private String name;
     private double lon;
     private double lat;
-    private double temp;
+
+    public double temp;
+
+
+
+    @JsonProperty()
     private String description;
+
+
+
 
     public WeatherDTO() {
     }
