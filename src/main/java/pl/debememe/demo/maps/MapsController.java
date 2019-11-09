@@ -23,7 +23,7 @@ public class MapsController {
         model.addAttribute("latitude", "51.509865");
         model.addAttribute("longitude", "-0.118092");
         model.addAttribute("route", new Route());
-        return "home";
+        return "index";
     }
 
     @PostMapping

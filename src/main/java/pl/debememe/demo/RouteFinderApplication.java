@@ -1,15 +1,24 @@
 package pl.debememe.demo;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication(scanBasePackages = {
-        "pl.debememe.demo.maps"
-})
-public class RouteFinderApplication {
+
+@SpringBootApplication
+
+public class RouteFinderApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(RouteFinderApplication.class, args);
     }
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(RouteFinderApplication.class);
+    }
 }
