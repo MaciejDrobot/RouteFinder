@@ -1,9 +1,15 @@
 package pl.debememe.demo.maps;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Location {
 
+    @JsonProperty("lng")
     public String longitude;
+
+    @JsonProperty("lat")
     public String latitude;
+
 
     public Location() {
     }

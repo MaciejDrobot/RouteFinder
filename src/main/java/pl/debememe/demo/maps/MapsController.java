@@ -1,33 +1,39 @@
 package pl.debememe.demo.maps;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
 public class MapsController {
 
-    MapsProvider mapsProvider;
+    private final LocationsProvider locationsProvider;
 
+    public MapsController(@Autowired LocationsProvider locationsProvider) {
+        this.locationsProvider = locationsProvider;
+    }
 
     @GetMapping
     @RequestMapping("/home")
     public String showHomePage(Model model){
-        String latitude = "58.400";
-        String longitude = "23.010";
-        model.addAttribute("latitude", latitude);
-        model.addAttribute("longitude", longitude);
-        model.addAttribute("location", new Location());
+        model.addAttribute("latitude", "51.509865");
+        model.addAttribute("longitude", "-0.118092");
+        model.addAttribute("route", new Route());
         return "home";
     }
 
     @PostMapping
-    @RequestMapping("/showLocation")
-    public String showLocation(@ModelAttribute Location location, Model model){
-        model.addAttribute("latitude", location.getLatitude());
-        model.addAttribute("longitude", location.getLongitude());
-        return "home";
+    @RequestMapping("/showRoute")
+    public String showRoute(@ModelAttribute Route route, Model model){
+        List<Location> list = locationsProvider.getLocations(route.getStart(), route.getEnd(), "AIzaSyBV6hjFNhlm5eCfM3aO-jWz2LapYwza3rM");
+        model.addAttribute("start", route.getStart());
+        model.addAttribute("end", route.getEnd());
+
+        return "directions";
     }
 
 

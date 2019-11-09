@@ -14,6 +14,15 @@ public class LocationsResponse {
     @JsonProperty("Response")
     private String response;
 
+    public LocationsResponse(String totalResults, List<Location> search, String response) {
+        this.totalResults = totalResults;
+        this.search = search;
+        this.response = response;
+    }
+
+    public LocationsResponse() {
+    }
+
     public String getTotalResults() {
         return totalResults;
     }
