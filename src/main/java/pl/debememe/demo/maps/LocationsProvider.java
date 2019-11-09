@@ -12,19 +12,20 @@ public class LocationsProvider {
 
     private String start;
     private String destination;
+    @Value("${API_KEY}")
     private String API_KEY;
 
-    private String queryURL(String start, String destination, String API_KEY){
+    private String queryURL(String start, String destination){
         return "https://maps.googleapis.com/maps/api/directions/json?"
                 + "origin=" + start
                 + "&destination=" + destination
                 + "&key=" + API_KEY;
     }
 
-    public List<Location> getLocations(String start, String destination, String API_KEY){
+    public List<Location> getLocations(String start, String destination){
         RestTemplate restTemplate = new RestTemplate();
         LocationsResponse forObject = restTemplate
-                .getForObject(queryURL(start, destination, API_KEY), LocationsResponse.class);
+                .getForObject(queryURL(start, destination), LocationsResponse.class);
         List<Location> search = forObject.getSearch();
         return search;
     }
