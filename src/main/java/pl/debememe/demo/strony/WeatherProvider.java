@@ -30,6 +30,7 @@ public class WeatherProvider {
         HttpEntity<WeatherDTO> response = restTemplate.exchange(fullURL, HttpMethod.GET, entity, WeatherDTO.class);
         WeatherDTO body = response.getBody();
         body.setTemp(forObject.get("temp").asDouble());
+        body.setName(restTemplate.getForObject(fullURL, JsonNode.class).get("name").asText());
         return body;
     }
 

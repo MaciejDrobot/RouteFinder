@@ -12,16 +12,10 @@ public class WeatherDTO {
     private String name;
     private double lon;
     private double lat;
-
     public double temp;
-
-
 
     @JsonProperty()
     private String description;
-
-
-
 
     public WeatherDTO() {
     }

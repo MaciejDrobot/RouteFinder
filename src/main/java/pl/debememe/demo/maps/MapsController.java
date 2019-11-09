@@ -31,7 +31,7 @@ public class MapsController {
         double lat = 51.50;
         double lon = -0.11;
         model.addAttribute("temperature", weatherProvider.getLatAndLon(lat, lon).getTemp());
-        System.out.println(weatherProvider.getLatAndLon(lat, lon).getTemp());
+        model.addAttribute("location", weatherProvider.getLatAndLon(lat, lon).getName());
         return "index";
     }
 
@@ -41,6 +41,10 @@ public class MapsController {
         List<Location> list = locationsProvider.getLocations(route.getStart(), route.getEnd());
         model.addAttribute("start", route.getStart());
         model.addAttribute("end", route.getEnd());
+        double lat = 51.50;
+        double lon = -0.11;
+        model.addAttribute("temperature", weatherProvider.getLatAndLon(lat, lon).getTemp());
+        model.addAttribute("location", weatherProvider.getLatAndLon(lat, lon).getName());
 
         return "directions";
     }
