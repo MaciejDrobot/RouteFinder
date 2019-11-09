@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Geolocation</title>
+    <title>RouteFinder</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -13,8 +13,12 @@
 
 <div th:insert="fragments/navbar.html"></div>
 
-<div class="container">
-    <div th:insert="fragments/map.html"></div>
+<div id="container">
+
+    <div th:insert="fragments/mapDirections.html"></div>
+
+    <div th:insert="fragments/weather.html"></div>
+
 </div>
 
 <div th:insert="fragments/bootstrap.html"></div>
