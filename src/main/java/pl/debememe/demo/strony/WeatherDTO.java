@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class WeatherDTO {
 
     @JsonProperty("name")
@@ -13,9 +15,11 @@ public class WeatherDTO {
     private double lon;
     private double lat;
     public double temp;
-
-    @JsonProperty()
+    @JsonProperty("description")
     private String description;
+
+
+
 
     public WeatherDTO() {
     }
@@ -27,6 +31,7 @@ public class WeatherDTO {
         this.temp = temp;
         this.description = description;
     }
+
 
     public String getName() {
         return name;
