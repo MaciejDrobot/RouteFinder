@@ -17,19 +17,22 @@ public class WeatherDTO {
     public double temp;
     @JsonProperty("description")
     private String description;
-
-
+    @JsonProperty("EndLocation")
+    private List[] end_location;
+    private String icon;
 
 
     public WeatherDTO() {
     }
 
-    public WeatherDTO(String name, double lon, double lat, double temp, String description) {
+    public WeatherDTO(String name, double lon, double lat, double temp, String description, List[] end_location) {
         this.name = name;
         this.lon = lon;
         this.lat = lat;
         this.temp = temp;
         this.description = description;
+        this.end_location= end_location;
+        this.icon = icon;
     }
 
 
@@ -71,5 +74,20 @@ public class WeatherDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public List[] getEnd_location() {
+        return end_location;
+    }
+
+    public void setEnd_location(List[] end_location) {
+        this.end_location = end_location;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }
