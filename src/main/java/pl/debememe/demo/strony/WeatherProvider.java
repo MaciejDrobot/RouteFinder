@@ -24,13 +24,14 @@ public class WeatherProvider {
 
 
         HttpEntity<String> entity = createHttpEntity();
+        //JsonNode forObject = restTemplate.getForObject(fullURL, JsonNode.class).get("main");
 
-        JsonNode forObject = restTemplate.getForObject(fullURL, JsonNode.class).get("main");
-        System.out.println(forObject.get("temp"));
         HttpEntity<WeatherDTO> response = restTemplate.exchange(fullURL, HttpMethod.GET, entity, WeatherDTO.class);
         WeatherDTO body = response.getBody();
-        body.setTemp(forObject.get("temp").asDouble());
+        //body.setTemp(forObject.get("temp").asDouble());
+        body.setTemp(restTemplate.getForObject(fullURL, JsonNode.class).get("main").get("temp").asInt());
         body.setName(restTemplate.getForObject(fullURL, JsonNode.class).get("name").asText());
+        //body.setName(restTemplate.getForObject(fullURL, JsonNode.class).get("main").asText());
         return body;
     }
 

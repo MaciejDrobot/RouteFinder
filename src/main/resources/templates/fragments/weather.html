@@ -6,10 +6,10 @@
     <table class="table table-dark">
         <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Location</th>
             <th scope="col">Temperature</th>
             <th scope="col">Weather</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -17,7 +17,8 @@
             <th scope="row">1</th>
             <td><h3 th:text="${location}"></h3></td>
             <td><h3 th:text="${temperature} + ' °C'"></h3></td>
-            <td></td>
+            <td><h3 th:text="${temperature}"></h3></td>
+            <td><img src="/static/css/weatherIcons/sunny.png" height="64"></td>
         </tr>
 
         </tbody>
