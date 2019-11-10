@@ -22,14 +22,15 @@ public class WeatherProvider {
         RestTemplate restTemplate = new RestTemplate();
         String fullURL = WEATHER_URL + "lat=" + lat + "&lon=" + lon;
 
-
         HttpEntity<String> entity = createHttpEntity();
 
-        JsonNode forObject = restTemplate.getForObject(fullURL, JsonNode.class).get("main");
-        System.out.println(forObject.get("temp"));
         HttpEntity<WeatherDTO> response = restTemplate.exchange(fullURL, HttpMethod.GET, entity, WeatherDTO.class);
         WeatherDTO body = response.getBody();
-        body.setTemp(forObject.get("temp").asDouble());
+
+        JsonNode weatherInfo = restTemplate.getForObject(fullURL, JsonNode.class);
+        body.setTemp(weatherInfo.get("main").get("temp").asDouble());
+        body.setName(weatherInfo.get("name").asText());
+        body.setDescription(weatherInfo.get("weather").get(0).get("description").asText());
         return body;
     }
 
@@ -39,18 +40,5 @@ public class WeatherProvider {
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         return new HttpEntity<>("parameters", headers);
     }
-
-//    public void getTemp(double lat, double lon) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String fullURL = WEATHER_URL + "lat=" + lat + "&lon=" + lon;
-//
-//        HttpEntity<String> entity = createHttpEntity();
-//
-//        JsonNode forObject = restTemplate.getForObject(fullURL, JsonNode.class).get("main");
-//        for (JsonNode jsonNode : forObject) {
-//            System.out.println(jsonNode.get("temp") + "°C");
-//        }
-//
-//    }
 
 }

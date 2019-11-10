@@ -1,4 +1,4 @@
-package pl.debememe.demo.strony;
+/*package pl.debememe.demo.strony;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +12,8 @@ public class WeatherRestController {
 
     private WeatherProvider weatherProvider;
 
-/*    double lat = 53.02;
-    double lon = 20.83;*/
+    double lat = 53.02;
+    double lon = 20.83;
 
 //    public WeatherRestController(@Autowired WeatherProvider weatherProvider) {
 //        this.weatherProvider = weatherProvider;
@@ -29,4 +29,4 @@ public class WeatherRestController {
 //         //model.addAttribute("temperature", "5");
 //         return "index";
 //    }
-}
+}*/

@@ -30,7 +30,9 @@ public class MapsController {
         model.addAttribute("route", new Route());
         double lat = 51.50;
         double lon = -0.11;
-        model.addAttribute("temperature", weatherProvider.getLatAndLon(lat, lon).getTemp());
+        model.addAttribute("temperature", weatherProvider.getLatAndLon(lat, lon).getTemp() + " °C");
+        model.addAttribute("location", weatherProvider.getLatAndLon(lat, lon).getName());
+        model.addAttribute("description", weatherProvider.getLatAndLon(lat, lon).getDescription());
         System.out.println(weatherProvider.getLatAndLon(lat, lon).getTemp());
         return "index";
     }
