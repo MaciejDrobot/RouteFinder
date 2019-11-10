@@ -31,7 +31,7 @@ public class WeatherProvider {
         body.setTemp(weatherInfo.get("main").get("temp").asDouble());
         body.setName(weatherInfo.get("name").asText());
         body.setDescription(weatherInfo.get("weather").get(0).get("description").asText());
-        body.setIcon(weatherInfo.get("weather").get(0).get("icon").asText());
+        body.setIcon(weatherInfo.get("weather").get(0).get("icon").asText() + ".png");
         return body;
     }
 

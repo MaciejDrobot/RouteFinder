@@ -25,7 +25,7 @@ public class WeatherDTO {
     public WeatherDTO() {
     }
 
-    public WeatherDTO(String name, double lon, double lat, double temp, String description, List[] end_location) {
+    public WeatherDTO(String name, double lon, double lat, double temp, String description, List[] end_location, String icon) {
         this.name = name;
         this.lon = lon;
         this.lat = lat;

@@ -34,6 +34,10 @@ public class MapsController {
         model.addAttribute("location", weatherProvider.getLatAndLon(lat, lon).getName());
         model.addAttribute("description", weatherProvider.getLatAndLon(lat, lon).getDescription());
         System.out.println(weatherProvider.getLatAndLon(lat, lon).getTemp());
+
+
+        model.addAttribute("icon", weatherProvider.getLatAndLon(lat, lon).getIcon());
+
         return "index";
     }
 
@@ -46,6 +50,7 @@ public class MapsController {
 //        model.addAttribute("description", weatherProvider.getLatAndLon(list.getLatitude(), list.getLongitude()).getDescription());
         model.addAttribute("start", route.getStart());
         model.addAttribute("end", route.getEnd());
+
 
         return "directions";
     }
