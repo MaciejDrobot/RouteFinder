@@ -10,7 +10,7 @@ public class Test {
         double lat = 51.50;
         double lon = -0.11;
 
-        System.out.println(weatherProvider.getLatAndLon(lat, lon));
+        System.out.println(weatherProvider.getLatAndLon(lat, lon).getName());
     }
 
 
