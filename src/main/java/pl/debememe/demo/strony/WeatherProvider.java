@@ -13,17 +13,16 @@ import java.util.Collections;
 @Service
 public class WeatherProvider {
 
-    double lat = 51.50;
-    double lon = -0.11;
+//    double lat = 51.50;
+//    double lon = -0.11;
     private final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID=51079114e50559a6a1afc21bd1c24ea0&";
     private String API_KEY = "51079114e50559a6a1afc21bd1c24ea0";
 
-    public WeatherDTO getLatAndLon(String lat, String lon) {
+    public WeatherDTO getWeather(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();
         String fullURL = WEATHER_URL + "lat=" + lat + "&lon=" + lon;
 
         HttpEntity<String> entity = createHttpEntity();
-
         HttpEntity<WeatherDTO> response = restTemplate.exchange(fullURL, HttpMethod.GET, entity, WeatherDTO.class);
         WeatherDTO body = response.getBody();
 

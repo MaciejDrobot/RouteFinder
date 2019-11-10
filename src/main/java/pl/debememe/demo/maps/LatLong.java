@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LatLong {
 
-    @JsonProperty("lng")
     public String longitude;
-
-    @JsonProperty("lat")
     public String latitude;
 
 

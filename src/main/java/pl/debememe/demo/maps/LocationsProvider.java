@@ -1,6 +1,5 @@
 package pl.debememe.demo.maps;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -10,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.xml.stream.Location;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +32,7 @@ public class LocationsProvider {
     public List<LatLong> getLocations(String start, String destination){
 
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<String> entity = createHttpEntity();
+       // HttpEntity<String> entity = createHttpEntity();
 
 //        HttpEntity<Location> response = restTemplate.exchange(queryURL(start, destination), HttpMethod.GET, entity, Location.class);
         List<LatLong> locationsList = new ArrayList<>();
@@ -52,13 +52,4 @@ public class LocationsProvider {
 
         return locationsList;
     }
-
-    private HttpEntity<String> createHttpEntity() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
-        return new HttpEntity<>("parameters", headers);
-    }
-
-
 }
