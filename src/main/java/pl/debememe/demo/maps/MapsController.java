@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.debememe.demo.strony.WeatherProvider;
 
+import java.util.List;
+
 
 @Controller
 public class MapsController {
@@ -38,10 +40,10 @@ public class MapsController {
     @PostMapping
     @RequestMapping("/showRoute")
     public String showRoute(@ModelAttribute Route route, Model model){
-        LatLong list = locationsProvider.getLocations(route.getStart(), route.getEnd());
-        model.addAttribute("temperature", weatherProvider.getLatAndLon(list.getLatitude(), list.getLongitude()).getTemp() + " °C");
-        model.addAttribute("location", weatherProvider.getLatAndLon(list.getLatitude(), list.getLongitude()).getName());
-        model.addAttribute("description", weatherProvider.getLatAndLon(list.getLatitude(), list.getLongitude()).getDescription());
+        List<LatLong> list = locationsProvider.getLocations(route.getStart(), route.getEnd());
+        model.addAttribute("temperature", weatherProvider.getLatAndLon(list.get(0).getLatitude(), list.get(0).getLongitude()).getTemp() + " °C");
+//        model.addAttribute("location", weatherProvider.getLatAndLon(list.getLatitude(), list.getLongitude()).getName());
+//        model.addAttribute("description", weatherProvider.getLatAndLon(list.getLatitude(), list.getLongitude()).getDescription());
         model.addAttribute("start", route.getStart());
         model.addAttribute("end", route.getEnd());
 

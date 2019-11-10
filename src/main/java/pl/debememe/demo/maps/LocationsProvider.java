@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,18 +29,28 @@ public class LocationsProvider {
                 + "&key=" + API_KEY;
     }
 
-    public LatLong getLocations(String start, String destination){
+    public List<LatLong> getLocations(String start, String destination){
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> entity = createHttpEntity();
 
-        HttpEntity<LatLong> response = restTemplate.exchange(queryURL(start, destination), HttpMethod.GET, entity, LatLong.class);
+//        HttpEntity<Location> response = restTemplate.exchange(queryURL(start, destination), HttpMethod.GET, entity, Location.class);
+        List<LatLong> locationsList = new ArrayList<>();
 
-        LatLong body = response.getBody();
+
         JsonNode locationInfo = restTemplate.getForObject(queryURL(start, destination), JsonNode.class);
-        body.setLatitude(locationInfo.get("routes").get(0).get("legs").get(0).get("steps").get(0).get("start_location").get("lat").asText());
-        body.setLongitude(locationInfo.get("routes").get(0).get("legs").get(0).get("steps").get(0).get("start_location").get("lng").asText());
-        return body;
+
+        int steps = locationInfo.get("routes").get(0).get("legs").get(0).get("steps").size();
+
+        for (int i = 0; i < steps; i++) {
+            LatLong location = new LatLong();
+            location.setLatitude(locationInfo.get("routes").get(0).get("legs").get(0).get("steps").get(i).get("start_location").get("lat").asText());
+            location.setLongitude(locationInfo.get("routes").get(0).get("legs").get(0).get("steps").get(i).get("start_location").get("lng").asText());
+            locationsList.add(location);
+        }
+
+
+        return locationsList;
     }
 
     private HttpEntity<String> createHttpEntity() {
