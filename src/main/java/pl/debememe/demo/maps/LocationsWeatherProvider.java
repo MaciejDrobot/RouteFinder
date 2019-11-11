@@ -1,29 +1,28 @@
 package pl.debememe.demo.maps;
 
+import org.eclipse.collections.impl.block.factory.HashingStrategies;
+import org.eclipse.collections.impl.utility.ListIterate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.debememe.demo.strony.WeatherProvider;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class LocationsWeatherProvider {
 
-    private LocationsProvider locationsProvider = new LocationsProvider();
-    private WeatherProvider weatherProvider;
-    private String start;
-    private String destination;
+    private final LocationsProvider locationsProvider;
+    private final WeatherProvider weatherProvider;
 
-    //List<LatLong> list = locationsProvider.getLocations(start, destination);
-    //List<LocationWeather> locationsWeatherList = new ArrayList<>();
+    public LocationsWeatherProvider(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider) {
+        this.locationsProvider = locationsProvider;
+        this.weatherProvider = weatherProvider;
+    }
 
     List<LocationWeather> getLocationsWeatherList(String start, String destination) {
 
-        LocationsProvider locationsProvider = new LocationsProvider();
-        WeatherProvider weatherProvider = new WeatherProvider();
-        List<LocationWeather> locationsWeatherList = new ArrayList<>();
-
         List<LatLong> list = locationsProvider.getLocations(start, destination);
+        List<LocationWeather> locationsWeatherList = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
             LocationWeather locationWeather = new LocationWeather();
@@ -33,7 +32,24 @@ public class LocationsWeatherProvider {
             locationWeather.setIcon(weatherProvider.getWeather(list.get(i).getLatitude(), list.get(i).getLongitude()).getIcon());
             locationsWeatherList.add(locationWeather);
         }
-        return locationsWeatherList;
+        return filterLocations(locationsWeatherList);
+    }
+
+    List<LocationWeather> createInitialLocation(String lat, String lon){
+        List<LocationWeather> list = new ArrayList<>();
+        LocationWeather locationWeather = new LocationWeather();
+        locationWeather.setLocation(weatherProvider.getWeather(lat, lon).getName());
+        locationWeather.setTemp(weatherProvider.getWeather(lat, lon).getTemp() + " °C");
+        locationWeather.setDescription(weatherProvider.getWeather(lat, lon).getDescription());
+        locationWeather.setIcon(weatherProvider.getWeather(lat, lon).getIcon());
+        list.add(locationWeather);
+        return list;
+    }
+
+    static List<LocationWeather> filterLocations(List<LocationWeather> list){
+        List<LocationWeather> uniqueLocations = ListIterate
+                .distinct(list, HashingStrategies.fromFunction(LocationWeather::getLocation));
+        return uniqueLocations;
     }
 
 }
