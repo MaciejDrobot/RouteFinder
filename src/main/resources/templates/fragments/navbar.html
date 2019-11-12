@@ -3,8 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div><img src="css/ico.png" style="height: 40px; width: 40px; margin-right: 5px"></div>
-    <a class="navbar-brand" style="font-size: 32px; font-weight: bold">Route Finder</a>
+    <div id="logo">
+     <div style="float: left"><img src="css/ico.png" style="height: 45px; width: 45px; margin-right: 5px"></div>
+     <div style="float: left"><a class="navbar-brand" style="font-size: 32px; font-weight: bold"> Route Weather Finder</a></div>
+     <div style="float: left"><img src="css/weathericons/partlycloudy.png" style="height: 45px; width: 45px; margin-right: 5px"></div>
+    </div>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -12,13 +16,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/home" style="font-size: 22px; margin-right: 25px">Home<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="#">Link</a>-->
+<!--            </li>-->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 22px;">
                     My routes
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">

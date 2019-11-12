@@ -14,12 +14,15 @@ public class MapsController {
     private final LocationsProvider locationsProvider;
     private final WeatherProvider weatherProvider;
     private final LocationsWeatherProvider locationsWeatherProvider;
+    private final RouteStats routeStats;
+
 
     public MapsController(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider,
-                          LocationsWeatherProvider locationsWeatherProvider) {
+                          LocationsWeatherProvider locationsWeatherProvider, RouteStats routeStats) {
         this.locationsProvider = locationsProvider;
         this.weatherProvider = weatherProvider;
         this.locationsWeatherProvider = locationsWeatherProvider;
+        this.routeStats = routeStats;
     }
 
     @GetMapping
@@ -38,7 +41,11 @@ public class MapsController {
     public String showRoute(@ModelAttribute Route route, Model model){
         List<LocationWeather> locationsWeatherList =
                 locationsWeatherProvider.getLocationsWeatherList(route.getStart(), route.getEnd());
+        //List<LocationWeather> locationsWeatherList = locationsWeatherProvider.getTestList();
+        List<LocationWeather> sorted = new ArrayList<>(locationsWeatherList);
+        RouteStats stats = routeStats.getRouteStats(route, sorted);
         model.addAttribute("list", locationsWeatherList);
+        model.addAttribute("stats", stats);
         model.addAttribute("start", route.getStart());
         model.addAttribute("end", route.getEnd());
         return "directions";

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<div id="stats">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.w3.org/1999/xhtml">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <div id="route">
+                    <a class="navbar-brand">Route: </a>
+                    <a class="navbar-brand" th:text="${stats.start}"></a>
+                    <a class="navbar-brand"> to </a>
+                    <a class="navbar-brand" th:text="${stats.destination}"></a>
+                </div>
+
+                <div id="distance">
+                    <a class="navbar-brand"> Distance: </a>
+                    <a class="navbar-brand">1600 km</a>
+                </div>
+
+                <div id="temperature">
+                    <a class="navbar-brand"> Max temp: </a>
+                    <a class="navbar-brand" th:text="${stats.maxTemp}"></a>
+                    <a class="navbar-brand" style="margin-left: 25px"> Min temp: </a>
+                    <a class="navbar-brand" th:text="${stats.minTemp}"></a>
+                </div>
+
+
+            </ul>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SAVE ROUTE</button>
+        </div>
+    </nav>
+</div>
