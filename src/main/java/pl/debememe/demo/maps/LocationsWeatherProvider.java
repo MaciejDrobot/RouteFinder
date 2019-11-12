@@ -24,7 +24,7 @@ public class LocationsWeatherProvider {
         List<LatLong> list = locationsProvider.getLocations(start, destination);
         List<LocationWeather> locationsWeatherList = new ArrayList<>();
 
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i+=2) {
             LocationWeather locationWeather = new LocationWeather();
             locationWeather.setLocation(weatherProvider.getWeather(list.get(i).getLatitude(), list.get(i).getLongitude()).getName());
             locationWeather.setTemp(weatherProvider.getWeather(list.get(i).getLatitude(), list.get(i).getLongitude()).getTemp() + " °C");

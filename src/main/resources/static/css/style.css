@@ -31,3 +31,17 @@ body
     height: 600px;
     width: 38%;
 }
+
+.my-custom-scrollbar
+{
+    position: relative;
+    height: 600px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y
+{
+    display: block;
+}
+
+

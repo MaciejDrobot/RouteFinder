@@ -15,8 +15,8 @@ public class WeatherProvider {
 
     double lat = 51.50;
     double lon = -0.11;
-    private final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID=51079114e50559a6a1afc21bd1c24ea0&";
-    private String API_KEY = "51079114e50559a6a1afc21bd1c24ea0";
+    private final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID=0c0ff517d621ffc882d134de48c9904d&";
+    private String API_KEY = "0c0ff517d621ffc882d134de48c9904d";
 
     public WeatherDTO getWeather(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();
