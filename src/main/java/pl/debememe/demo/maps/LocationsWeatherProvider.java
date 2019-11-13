@@ -19,9 +19,8 @@ public class LocationsWeatherProvider {
         this.weatherProvider = weatherProvider;
     }
 
-    List<LocationWeather> getLocationsWeatherList(String start, String destination) {
+    List<LocationWeather> getLocationsWeatherList(List<LatLong> list) {
 
-        List<LatLong> list = locationsProvider.getLocations(start, destination);
         List<LocationWeather> locationsWeatherList = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i+=2) {

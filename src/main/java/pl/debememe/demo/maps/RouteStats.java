@@ -16,13 +16,13 @@ public class RouteStats {
     private String maxTemp;
 
 
-    RouteStats getRouteStats(Route route, List<LocationWeather> list) {
+    RouteStats getRouteStats(MapsDTO route, List<LocationWeather> list) {
         RouteStats routeStats = new RouteStats();
         routeStats.setStart(route.getStart());
-        routeStats.setDestination(route.getEnd());
+        routeStats.setDestination(route.getDestination());
+        routeStats.setDistance(route.getDistance());
         routeStats.setMinTemp(getMinTemp(list));
         routeStats.setMaxTemp(getMaxTemp(list));
-
         return routeStats;
     }
 

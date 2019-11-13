@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,14 +29,12 @@ public class LocationsProvider {
                 + "&key=" + API_KEY;
     }
 
-    public List<LatLong> getLocations(String start, String destination){
+    public MapsDTO getDirections(String start, String destination){
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> entity = createHttpEntity();
-
-//        HttpEntity<Location> response = restTemplate.exchange(queryURL(start, destination), HttpMethod.GET, entity, Location.class);
+        MapsDTO route = new MapsDTO();
         List<LatLong> locationsList = new ArrayList<>();
-
 
         JsonNode locationInfo = restTemplate.getForObject(queryURL(start, destination), JsonNode.class);
 
@@ -48,9 +46,16 @@ public class LocationsProvider {
             location.setLongitude(locationInfo.get("routes").get(0).get("legs").get(0).get("steps").get(i).get("start_location").get("lng").asText());
             locationsList.add(location);
         }
+        String startQuery = locationInfo.get("routes").get(0).get("legs").get(0).get("start_address").asText();
+        List<String> startName = Arrays.asList(startQuery.split(","));
+        route.setStart(startName.get(0));
+        String destinationQuery = locationInfo.get("routes").get(0).get("legs").get(0).get("end_address").asText();
+        List<String> destinationName = Arrays.asList(destinationQuery.split(","));
+        route.setDestination(destinationName.get(0));
+        route.setDistance(locationInfo.get("routes").get(0).get("legs").get(0).get("distance").get("text").asText());
+        route.setLocations(locationsList);
 
-
-        return locationsList;
+        return route;
     }
 
     private HttpEntity<String> createHttpEntity() {
