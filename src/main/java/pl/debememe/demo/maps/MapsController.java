@@ -6,21 +6,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.debememe.demo.strony.WeatherProvider;
 
-import java.util.List;
-
+import java.util.*;
 
 @Controller
 public class MapsController {
 
     private final LocationsProvider locationsProvider;
-
     private final WeatherProvider weatherProvider;
+    private final LocationsWeatherProvider locationsWeatherProvider;
+    private final RouteStats routeStats;
 
-    public MapsController(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider) {
+
+    public MapsController(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider,
+                          LocationsWeatherProvider locationsWeatherProvider, RouteStats routeStats) {
         this.locationsProvider = locationsProvider;
         this.weatherProvider = weatherProvider;
+        this.locationsWeatherProvider = locationsWeatherProvider;
+        this.routeStats = routeStats;
     }
-
 
     @GetMapping
     @RequestMapping("/home")
@@ -28,30 +31,23 @@ public class MapsController {
         model.addAttribute("latitude", "51.509865");
         model.addAttribute("longitude", "-0.118092");
         model.addAttribute("route", new Route());
-        String lat = "51.50";
-        String lon = "-0.11";
-        model.addAttribute("temperature", weatherProvider.getLatAndLon(lat, lon).getTemp() + " °C");
-        model.addAttribute("location", weatherProvider.getLatAndLon(lat, lon).getName());
-        model.addAttribute("description", weatherProvider.getLatAndLon(lat, lon).getDescription());
-        System.out.println(weatherProvider.getLatAndLon(lat, lon).getTemp());
-
-
-        model.addAttribute("icon", weatherProvider.getLatAndLon(lat, lon).getIcon());
-
+        List<LocationWeather> list = locationsWeatherProvider.createInitialLocation("51.50", "-0.11");
+        model.addAttribute("list", list);
         return "index";
     }
 
     @PostMapping
     @RequestMapping("/showRoute")
     public String showRoute(@ModelAttribute Route route, Model model){
-        List<LatLong> list = locationsProvider.getLocations(route.getStart(), route.getEnd());
-        model.addAttribute("temperature", weatherProvider.getLatAndLon(list.get(0).getLatitude(), list.get(0).getLongitude()).getTemp() + " °C");
-//        model.addAttribute("location", weatherProvider.getLatAndLon(list.getLatitude(), list.getLongitude()).getName());
-//        model.addAttribute("description", weatherProvider.getLatAndLon(list.getLatitude(), list.getLongitude()).getDescription());
+        List<LocationWeather> locationsWeatherList =
+                locationsWeatherProvider.getLocationsWeatherList(route.getStart(), route.getEnd());
+        //List<LocationWeather> locationsWeatherList = locationsWeatherProvider.getTestList();
+        List<LocationWeather> sorted = new ArrayList<>(locationsWeatherList);
+        RouteStats stats = routeStats.getRouteStats(route, sorted);
+        model.addAttribute("list", locationsWeatherList);
+        model.addAttribute("stats", stats);
         model.addAttribute("start", route.getStart());
         model.addAttribute("end", route.getEnd());
-
-
         return "directions";
     }
 

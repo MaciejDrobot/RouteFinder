@@ -2,8 +2,9 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <div id="weather">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
-    <table class="table table-dark">
+    <table class="table table-dark table-striped mb-0">
         <thead>
         <tr>
             <th scope="col">Location</th>
@@ -12,21 +13,13 @@
             <th scope="col"></th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td><h3 th:text="${location}"></h3></td>
-            <td><h3 th:text="${temperature}"></h3></td>
-            <td><h3 th:text="${description}"></h3></td>
-           <td><img src="css/weatherIcons/sunny.png" height="64"></td>
-<!--            <td><img src="@{'/css/weatherIcons/' + ${icon}}" height="64"></td>-->
-       <!--   //  th:text="'css/weatherIcons/' + ${description} + '.png' "
-            //"@{'/mycontroller/' + ${type}}"
--->
-
-            <td><img th:src="'/css/weatherIcons/' + ${icon}" height="64"></td>
-
-<!--            <td><h3 th:text="${temperature} + ' °C'"></h3></td>-->
-        </tr>
-        </tbody>
+            <tbody>
+                    <tr th:each="locationWeather: ${list}">
+                        <td><h5 th:text="${locationWeather.location}" style="vertical-align: middle"></h5></td>
+                        <td><h5 th:text="${locationWeather.temp} + ' °C'"></h5></td>
+                        <td><h5 th:text="${locationWeather.description}"></h5></td>
+                        <td><img th:src="'/css/weatherIcons/' + ${locationWeather.icon}" height="45"></td>
+            </tbody>
     </table>
+    </div>
 </div>

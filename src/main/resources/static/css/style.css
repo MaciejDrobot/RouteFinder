@@ -5,6 +5,13 @@ body
     width: available;
 }
 
+#logo
+{
+    margin-left: 50px;
+    margin-right: 50px;
+    float: left;
+}
+
 #container
 {
     width: available;
@@ -31,3 +38,38 @@ body
     height: 600px;
     width: 38%;
 }
+
+#stats
+{
+    margin-top: 50px;
+}
+
+#distance
+{
+    margin-left: 50px;
+}
+
+#temperature
+{
+    margin-left: 50px;
+}
+
+.navbar-brand
+{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.my-custom-scrollbar
+{
+    position: relative;
+    height: 600px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y
+{
+    display: block;
+}
+
+
