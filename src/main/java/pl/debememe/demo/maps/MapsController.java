@@ -16,15 +16,17 @@ public class MapsController {
     private final LocationsWeatherProvider locationsWeatherProvider;
     private final RouteStats routeStats;
     private final MapsDTO mapsDTO;
+    private final RouteStatsRepository repository;
 
 
     public MapsController(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider,
-                          LocationsWeatherProvider locationsWeatherProvider, RouteStats routeStats, MapsDTO mapsDTO) {
+                          LocationsWeatherProvider locationsWeatherProvider, RouteStats routeStats, MapsDTO mapsDTO, RouteStatsRepository repository) {
         this.locationsProvider = locationsProvider;
         this.weatherProvider = weatherProvider;
         this.locationsWeatherProvider = locationsWeatherProvider;
         this.routeStats = routeStats;
         this.mapsDTO = mapsDTO;
+        this.repository = repository;
     }
 
     @GetMapping
@@ -35,6 +37,9 @@ public class MapsController {
         model.addAttribute("route", new Route());
         List<LocationWeather> list = locationsWeatherProvider.createInitialLocation("51.50", "-0.11");
         model.addAttribute("list", list);
+        model.addAttribute("temp", list.get(0).getTemp());
+        //model.addAttribute("icon", list.get(0).getIcon());
+        //model.addAttribute("icon", "'/css/weatherIcons/01d.png'");
         return "index";
     }
 
@@ -50,6 +55,14 @@ public class MapsController {
         model.addAttribute("stats", stats);
         model.addAttribute("start", route.getStart());
         model.addAttribute("end", route.getEnd());
+        return "directions";
+    }
+
+    @PostMapping
+    @RequestMapping("/saveRoute")
+    public String saveRoute(@ModelAttribute RouteStats stats, Model model){
+        repository.save(stats);
+
         return "directions";
     }
 

@@ -1,18 +1,29 @@
 package pl.debememe.demo.maps;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Service;
-
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class RouteStats {
+@Entity
+public class RouteStats implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "start_location")
     private String start;
+    @Column(name = "destination_location")
     private String destination;
+    @Column(name = "distance")
     private String distance;
+    @Column(name = "min_temp")
     private String minTemp;
+    @Column(name = "max_temp")
     private String maxTemp;
 
 
