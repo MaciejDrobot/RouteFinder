@@ -29,9 +29,12 @@
 
 
             </ul>
-            <button class="btn btn-outline-success my-2 my-sm-0"
-                    type="submit" th:action="@{/saveRoute}"
-                    method="post">SAVE ROUTE</button>
+            <form class="form-inline my-2 my-lg-0"
+                  th:object="${stats}"
+                  th:action="@{/showRoute}"
+                  method="post">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SAVE ROUTE</button>
+            </form>
         </div>
     </nav>
 </div>

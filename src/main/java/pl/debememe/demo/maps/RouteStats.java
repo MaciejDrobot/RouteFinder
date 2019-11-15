@@ -1,7 +1,8 @@
 package pl.debememe.demo.maps;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collections;
@@ -10,11 +11,13 @@ import java.util.List;
 
 @Service
 @Entity
+@Table(name = "route")
 public class RouteStats implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "start_location")
     private String start;
     @Column(name = "destination_location")
