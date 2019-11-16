@@ -1,6 +1,7 @@
 package pl.debememe.demo.maps;
 
 import javax.persistence.Id;
+
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
@@ -8,8 +9,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Service
 @Entity
 @Table(name = "route")
 public class RouteStats implements Serializable {
@@ -30,7 +31,7 @@ public class RouteStats implements Serializable {
     private String maxTemp;
 
 
-    RouteStats getRouteStats(MapsDTO route, List<LocationWeather> list) {
+    public static RouteStats getRouteStats(MapsDTO route, List<LocationWeather> list) {
         RouteStats routeStats = new RouteStats();
         routeStats.setStart(route.getStart());
         routeStats.setDestination(route.getDestination());
@@ -40,19 +41,14 @@ public class RouteStats implements Serializable {
         return routeStats;
     }
 
-    String getMinTemp(List<LocationWeather> list) {
-        Comparator<LocationWeather> compareByTemp =
-                (LocationWeather l1, LocationWeather l2) -> l1.getTemp().compareTo(l2.getTemp());
-        Collections.sort(list, compareByTemp);
-        return list.get(0).getTemp() + " °C (" + list.get(0).getLocation() + ")";
+    public static String getMinTemp(List<LocationWeather> list) {
+        List<Double> collect = list.stream().map(element -> Double.valueOf(element.getTemp())).collect(Collectors.toList());
+        return String.valueOf(collect.stream().min(Double::compare).get()) + " °C";
     }
 
-    String getMaxTemp(List<LocationWeather> list) {
-        Comparator<LocationWeather> compareByTemp =
-                (LocationWeather l1, LocationWeather l2) -> l1.getTemp().compareTo(l2.getTemp());
-        Collections.sort(list, compareByTemp);
-        int i = list.size() - 1;
-        return list.get(i).getTemp() + " °C (" + list.get(i).getLocation() + ")";
+    public static String getMaxTemp(List<LocationWeather> list) {
+        List<Double> collect = list.stream().map(element -> Double.valueOf(element.getTemp())).collect(Collectors.toList());
+        return String.valueOf(collect.stream().max(Double::compare).get()) + " °C";
     }
 
 
@@ -63,45 +59,46 @@ public class RouteStats implements Serializable {
         }
     }
 
-        public String getStart () {
-            return start;
-        }
 
-        public void setStart (String start){
-            this.start = start;
-        }
-
-        public String getDestination () {
-            return destination;
-        }
-
-        public void setDestination (String destination){
-            this.destination = destination;
-        }
-
-        public String getDistance () {
-            return distance;
-        }
-
-        public void setDistance (String distance){
-            this.distance = distance;
-        }
-
-        public String getMinTemp () {
-            return minTemp;
-        }
-
-        public void setMinTemp (String minTemp){
-            this.minTemp = minTemp;
-        }
-
-        public String getMaxTemp () {
-            return maxTemp;
-        }
-
-        public void setMaxTemp (String maxTemp){
-            this.maxTemp = maxTemp;
-        }
-
-
+    public String getStart() {
+        return start;
     }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getMinTemp() {
+        return minTemp;
+    }
+
+    public void setMinTemp(String minTemp) {
+        this.minTemp = minTemp;
+    }
+
+    public String getMaxTemp() {
+        return maxTemp;
+    }
+
+    public void setMaxTemp(String maxTemp) {
+        this.maxTemp = maxTemp;
+    }
+
+
+}

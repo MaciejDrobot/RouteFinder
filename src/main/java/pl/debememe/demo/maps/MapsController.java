@@ -5,32 +5,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.debememe.demo.strony.WeatherProvider;
+
 import java.util.*;
 
 @Controller
 public class MapsController {
 
+    private RouteStats lastStats;
+    List<LocationWeather> locationsWeatherList;
+
     private final LocationsProvider locationsProvider;
     private final WeatherProvider weatherProvider;
     private final LocationsWeatherProvider locationsWeatherProvider;
-    private final RouteStats routeStats;
     private final MapsDTO mapsDTO;
     private final RouteStatsRepository repository;
 
 
     public MapsController(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider,
-                          LocationsWeatherProvider locationsWeatherProvider, RouteStats routeStats, MapsDTO mapsDTO, RouteStatsRepository repository) {
+                          LocationsWeatherProvider locationsWeatherProvider, MapsDTO mapsDTO, RouteStatsRepository repository) {
         this.locationsProvider = locationsProvider;
         this.weatherProvider = weatherProvider;
         this.locationsWeatherProvider = locationsWeatherProvider;
-        this.routeStats = routeStats;
         this.mapsDTO = mapsDTO;
         this.repository = repository;
     }
 
     @GetMapping
     @RequestMapping("/home")
-    public String showHomePage(@ModelAttribute WeatherProvider weatherProvider, Model model){
+    public String showHomePage(@ModelAttribute WeatherProvider weatherProvider, Model model) {
         model.addAttribute("latitude", "51.5071934");
         model.addAttribute("longitude", "-0.12777652");
         model.addAttribute("route", new Route());
@@ -44,36 +46,36 @@ public class MapsController {
 
     @PostMapping
     @RequestMapping("/showRoute")
-    public String showRoute(@ModelAttribute Route route, Model model){
-        MapsDTO mapsDTO = locationsProvider.getDirections(route.getStart(), route.getEnd());
-        List<LocationWeather> locationsWeatherList =
-                locationsWeatherProvider.getLocationsWeatherList(mapsDTO.getLocations());
-        List<LocationWeather> sorted = new ArrayList<>(locationsWeatherList);
-        RouteStats stats = routeStats.getRouteStats(mapsDTO, sorted);
+    public String showRoute(@ModelAttribute Route route, Model model) {
+        if(lastStats == null) {
+            MapsDTO mapsDTO = locationsProvider.getDirections(route.getStart(), route.getEnd());
+            locationsWeatherList =
+                    locationsWeatherProvider.getLocationsWeatherList(mapsDTO.getLocations());
+            List<LocationWeather> sorted = new ArrayList<>(locationsWeatherList);
+            RouteStats stats = RouteStats.getRouteStats(mapsDTO, sorted);
+            lastStats = stats;
+            setModel(route, model);
+        }
+        else {
+            setModel(route, model);
+            lastStats = null;
+        }
+        return "directions";
+    }
+
+    private void setModel(@ModelAttribute Route route, Model model) {
         model.addAttribute("list", locationsWeatherList);
-        model.addAttribute("stats", stats);
+        model.addAttribute("stats", lastStats);
         model.addAttribute("start", route.getStart());
         model.addAttribute("end", route.getEnd());
-        return "directions";
     }
 
     @PostMapping
     @RequestMapping("/saveRoute")
-    public String saveRoute(@ModelAttribute RouteStats stats, Model model){
-        model.addAttribute("stats", stats);
-        repository.save(stats);
-        return "directions";
+    public String saveRoute() {
+        repository.save(lastStats);
+        return "redirect:showRoute";
     }
-
-//    @GetMapping("/getRoute")
-//    public List<RouteStats> getAllNotes() {
-//        return repository.findAll();
-//    }
-
-//    @PostMapping("/saveRoute")
-//    public RouteStats createRoute(@Valid @RequestBody RouteStats stats) {
-//
-//    }
 
 
 }
