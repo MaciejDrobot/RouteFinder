@@ -1,10 +1,9 @@
-package pl.debememe.demo.maps;
+package dev.mdrobot.RouteWeatherFinder.maps;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.debememe.demo.strony.WeatherProvider;
 
 import java.util.*;
 

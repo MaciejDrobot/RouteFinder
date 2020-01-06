@@ -1,4 +1,4 @@
-package pl.debememe.demo.maps;
+package dev.mdrobot.RouteWeatherFinder.maps;
 
 import org.springframework.stereotype.Service;
 

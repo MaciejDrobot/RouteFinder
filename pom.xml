@@ -8,10 +8,10 @@
         <version>2.2.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>pl.DeBeMeMe</groupId>
-    <artifactId>demo</artifactId>
+    <groupId>dev.mdrobot</groupId>
+    <artifactId>RouteWeatherFinder</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>RouteFinder</name>
+    <name>RouteWeatherFinder</name>
     <properties>
         <java.version>11</java.version>
     </properties>

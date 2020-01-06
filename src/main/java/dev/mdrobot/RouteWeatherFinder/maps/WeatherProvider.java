@@ -1,4 +1,4 @@
-package pl.debememe.demo.strony;
+package dev.mdrobot.RouteWeatherFinder.maps;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.HttpEntity;

@@ -1,12 +1,9 @@
-package pl.debememe.demo.maps;
+package dev.mdrobot.RouteWeatherFinder.maps;
 
 import javax.persistence.Id;
 
-import org.springframework.stereotype.Service;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

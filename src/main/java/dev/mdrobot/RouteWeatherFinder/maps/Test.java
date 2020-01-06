@@ -1,9 +1,4 @@
-package pl.debememe.demo.maps;
-
-import pl.debememe.demo.strony.WeatherProvider;
-
-import java.util.ArrayList;
-import java.util.List;
+package dev.mdrobot.RouteWeatherFinder.maps;
 
 public class Test {
     public static void main(String[] args) {

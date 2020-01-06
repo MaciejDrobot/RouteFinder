@@ -1,10 +1,10 @@
-package pl.debememe.demo.maps;
+package dev.mdrobot.RouteWeatherFinder.maps;
 
 import org.eclipse.collections.impl.block.factory.HashingStrategies;
 import org.eclipse.collections.impl.utility.ListIterate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.debememe.demo.strony.WeatherProvider;
+
 import java.util.*;
 
 
