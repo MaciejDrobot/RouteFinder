@@ -1,5 +1,8 @@
 package dev.mdrobot.RouteWeatherFinder.maps;
 
+import dev.mdrobot.RouteWeatherFinder.services.LocationWeather;
+import dev.mdrobot.RouteWeatherFinder.services.LocationsProvider;
+import dev.mdrobot.RouteWeatherFinder.services.WeatherProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

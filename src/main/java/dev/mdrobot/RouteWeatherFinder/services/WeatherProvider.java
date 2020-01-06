@@ -1,6 +1,8 @@
-package dev.mdrobot.RouteWeatherFinder.maps;
+package dev.mdrobot.RouteWeatherFinder.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import dev.mdrobot.RouteWeatherFinder.maps.WeatherDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,10 +15,14 @@ import java.util.Collections;
 @Service
 public class WeatherProvider {
 
-    double lat = 51.50;
-    double lon = -0.11;
-    private final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID=51079114e50559a6a1afc21bd1c24ea0&";
-    private String API_KEY = "51079114e50559a6a1afc21bd1c24ea0";
+    @Value("${HOME_LAT")
+    double lat;
+    @Value("${HOME_LON}")
+    double lon;
+    @Value("${WEATHER_API_KEY}")
+    private String WEATHER_API_KEY;
+    private final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID="
+            + WEATHER_API_KEY + "&";
 
     public WeatherDTO getWeather(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();

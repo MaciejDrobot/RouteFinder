@@ -1,7 +1,9 @@
-package dev.mdrobot.RouteWeatherFinder.maps;
+package dev.mdrobot.RouteWeatherFinder.services;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import dev.mdrobot.RouteWeatherFinder.maps.LatLong;
+import dev.mdrobot.RouteWeatherFinder.maps.MapsDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,14 +21,14 @@ public class LocationsProvider {
 
     private String start;
     private String destination;
-    @Value("${API_KEY}")
-    private String API_KEY;
+    @Value("${MAP_API_KEY}")
+    private String MAP_API_KEY;
 
     private String queryURL(String start, String destination){
         return "https://maps.googleapis.com/maps/api/directions/json?"
                 + "origin=" + start
                 + "&destination=" + destination
-                + "&key=" + API_KEY;
+                + "&key=" + MAP_API_KEY;
     }
 
     public MapsDTO getDirections(String start, String destination){
