@@ -1,4 +1,4 @@
-package dev.mdrobot.RouteWeatherFinder.services;
+package dev.mdrobot.RouteWeatherFinder.maps;
 
 
 import com.fasterxml.jackson.databind.JsonNode;

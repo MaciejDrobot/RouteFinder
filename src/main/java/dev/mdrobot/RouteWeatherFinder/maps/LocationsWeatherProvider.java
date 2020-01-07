@@ -1,8 +1,5 @@
 package dev.mdrobot.RouteWeatherFinder.maps;
 
-import dev.mdrobot.RouteWeatherFinder.services.LocationWeather;
-import dev.mdrobot.RouteWeatherFinder.services.LocationsProvider;
-import dev.mdrobot.RouteWeatherFinder.services.WeatherProvider;
 import org.eclipse.collections.impl.block.factory.HashingStrategies;
 import org.eclipse.collections.impl.utility.ListIterate;
 import org.springframework.beans.factory.annotation.Autowired;

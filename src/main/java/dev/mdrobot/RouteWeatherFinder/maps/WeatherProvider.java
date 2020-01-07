@@ -1,4 +1,4 @@
-package dev.mdrobot.RouteWeatherFinder.services;
+package dev.mdrobot.RouteWeatherFinder.maps;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import dev.mdrobot.RouteWeatherFinder.maps.WeatherDTO;
@@ -15,18 +15,21 @@ import java.util.Collections;
 @Service
 public class WeatherProvider {
 
-    @Value("${HOME_LAT")
+    @Value("${HOME_LAT}")
     double lat;
     @Value("${HOME_LON}")
     double lon;
     @Value("${WEATHER_API_KEY}")
     private String WEATHER_API_KEY;
-    private final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID="
-            + WEATHER_API_KEY + "&";
+
+    private String weatherURL() {
+        return "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID="
+                + WEATHER_API_KEY + "&";
+    }
 
     public WeatherDTO getWeather(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();
-        String fullURL = WEATHER_URL + "lat=" + lat + "&lon=" + lon;
+        String fullURL = weatherURL() + "lat=" + lat + "&lon=" + lon;
 
         HttpEntity<String> entity = createHttpEntity();
 

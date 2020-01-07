@@ -1,6 +1,5 @@
 package dev.mdrobot.RouteWeatherFinder.maps;
 
-import dev.mdrobot.RouteWeatherFinder.services.LocationWeather;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
