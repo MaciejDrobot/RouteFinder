@@ -1,7 +1,6 @@
-package dev.mdrobot.RouteWeatherFinder.maps;
+package dev.mdrobot.RouteWeatherFinder.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import dev.mdrobot.RouteWeatherFinder.maps.WeatherDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

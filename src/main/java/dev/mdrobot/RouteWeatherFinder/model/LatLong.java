@@ -1,4 +1,4 @@
-package dev.mdrobot.RouteWeatherFinder.maps;
+package dev.mdrobot.RouteWeatherFinder.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

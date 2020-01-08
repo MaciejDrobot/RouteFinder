@@ -1,4 +1,4 @@
-package dev.mdrobot.RouteWeatherFinder.maps;
+package dev.mdrobot.RouteWeatherFinder.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,5 +1,9 @@
-package dev.mdrobot.RouteWeatherFinder.maps;
+package dev.mdrobot.RouteWeatherFinder.services;
 
+import dev.mdrobot.RouteWeatherFinder.model.LatLong;
+import dev.mdrobot.RouteWeatherFinder.model.LocationWeather;
+import dev.mdrobot.RouteWeatherFinder.services.LocationsProvider;
+import dev.mdrobot.RouteWeatherFinder.services.WeatherProvider;
 import org.eclipse.collections.impl.block.factory.HashingStrategies;
 import org.eclipse.collections.impl.utility.ListIterate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +23,7 @@ public class LocationsWeatherProvider {
         this.weatherProvider = weatherProvider;
     }
 
-    List<LocationWeather> getLocationsWeatherList(List<LatLong> list) {
+    public List<LocationWeather> getLocationsWeatherList(List<LatLong> list) {
 
         List<LocationWeather> locationsWeatherList = new ArrayList<>();
 
@@ -34,7 +38,7 @@ public class LocationsWeatherProvider {
         return filterLocations(locationsWeatherList);
     }
 
-    List<LocationWeather> getTestList() {
+    public List<LocationWeather> getTestList() {
         List<LocationWeather> locationsWeatherList = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
             LocationWeather locationWeather = new LocationWeather();
@@ -48,7 +52,7 @@ public class LocationsWeatherProvider {
     }
 
 
-    List<LocationWeather> createInitialLocation(String lat, String lon){
+    public List<LocationWeather> createInitialLocation(String lat, String lon){
         List<LocationWeather> list = new ArrayList<>();
         LocationWeather locationWeather = new LocationWeather();
         locationWeather.setLocation(weatherProvider.getWeather(lat, lon).getName());
