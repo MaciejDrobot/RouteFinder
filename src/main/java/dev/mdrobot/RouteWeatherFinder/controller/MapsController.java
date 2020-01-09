@@ -6,7 +6,6 @@ import dev.mdrobot.RouteWeatherFinder.model.RouteStats;
 import dev.mdrobot.RouteWeatherFinder.model.RouteStatsRepository;
 import dev.mdrobot.RouteWeatherFinder.model.LocationWeather;
 import dev.mdrobot.RouteWeatherFinder.model.MapsDTO;
-import dev.mdrobot.RouteWeatherFinder.model.Route;
 import dev.mdrobot.RouteWeatherFinder.services.LocationsProvider;
 import dev.mdrobot.RouteWeatherFinder.services.WeatherProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import java.util.*;
 @SessionAttributes("session")
 public class MapsController {
 
-    private RouteStats lastStats;
     List<LocationWeather> locationsWeatherList;
 
     private final LocationsProvider locationsProvider;
@@ -49,7 +47,7 @@ public class MapsController {
     public String showHomePage(@ModelAttribute WeatherProvider weatherProvider, Model model) {
         model.addAttribute("latitude", "51.5071934");
         model.addAttribute("longitude", "-0.12777652");
-        model.addAttribute("route", new Route());
+        model.addAttribute("stats", new RouteStats());
         List<LocationWeather> list = locationsWeatherProvider.createInitialLocation("51.50", "-0.12");
         model.addAttribute("list", list);
         model.addAttribute("temp", list.get(0).getTemp());
@@ -58,68 +56,40 @@ public class MapsController {
         return "index";
     }
 
-
-
-
-
-
-
-//    @PostMapping
-//    @RequestMapping("/showRoute")
-//    public String showRoute(@ModelAttribute Route route, Model model) {
-//        if(lastStats == null) {
-//            MapsDTO mapsDTO = locationsProvider.getDirections(route.getStart(), route.getEnd());
-//            locationsWeatherList =
-//                    locationsWeatherProvider.getLocationsWeatherList(mapsDTO.getLocations());
-//            List<LocationWeather> sorted = new ArrayList<>(locationsWeatherList);
-//            RouteStats stats = RouteStats.getRouteStats(mapsDTO, sorted);
-//            lastStats = stats;
-//            setModel(route, model);
-//        }
-//        else {
-//            setModel(route, model);
-//            lastStats = null;
-//        }
-//        return "directions";
-//    }
-//
-//    private void setModel(@ModelAttribute Route route, Model model) {
-//        model.addAttribute("list", locationsWeatherList);
-//        model.addAttribute("stats", lastStats);
-//        model.addAttribute("start", route.getStart());
-//        model.addAttribute("end", route.getEnd());
-//    }
-//
-//    @PostMapping
-//    @RequestMapping("/saveRoute")
-//    public String saveRoute() {
-//        repository.save(lastStats);
-//        return "redirect:showRoute";
-//    }
-
     @PostMapping
     @RequestMapping("/showRoute")
-    public String showRoute(@ModelAttribute Route route, Model model){
-        MapsDTO mapsDTO = locationsProvider.getDirections(route.getStart(), route.getEnd());
+    public String showRoute(@ModelAttribute RouteStats route, Model model){
+
+        Session session = new Session();
+
+        MapsDTO mapsDTO = locationsProvider.getDirections(route.getStart(), route.getDestination());
         List<LocationWeather> locationsWeatherList =
                 locationsWeatherProvider.getLocationsWeatherList(mapsDTO.getLocations());
         List<LocationWeather> sorted = new ArrayList<>(locationsWeatherList);
         RouteStats stats = routeStats.getRouteStats(mapsDTO, sorted);
-        model.addAttribute("list", locationsWeatherList);
-        model.addAttribute("stats", stats);
-        model.addAttribute("start", route.getStart());
-        model.addAttribute("end", route.getEnd());
+
+        session.setStart(route.getStart());
+        session.setEnd(route.getDestination());
+        session.setLocationsWeatherList(locationsWeatherList);
+        session.setStats(stats);
+
+        model.addAttribute("session", session);
+        model.addAttribute("list", session.getLocationsWeatherList());
+        model.addAttribute("stats", session.getStats());
+        model.addAttribute("start", session.getStart());
+        model.addAttribute("end", session.getEnd());
+
         return "directions";
     }
 
     @PostMapping
     @RequestMapping("/saveRoute")
-    public String saveRoute(@ModelAttribute Route route, RouteStats stats, Model model){
-        model.addAttribute("stats", stats);
-        repository.save(stats);
+    public String saveRoute(@ModelAttribute ("session") Session session, Model model){
+        model.addAttribute("list", session.getLocationsWeatherList());
+        model.addAttribute("stats", session.getStats());
+        model.addAttribute("start", session.getStart());
+        model.addAttribute("end", session.getEnd());
+        repository.save(session.getStats());
         return "directions";
     }
-
-
-
 }
