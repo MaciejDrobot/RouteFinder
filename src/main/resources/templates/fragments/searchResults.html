@@ -7,8 +7,8 @@
     <table class="table table-dark table-striped mb-0">
         <thead>
         <tr>
-            <th scope="col" style="width: 10%">Date</th>
-            <th scope="col" style="width: 30%">Route</th>
+            <th scope="col" style="width: 15%">Date</th>
+            <th scope="col" style="width: 25%">Route</th>
             <th scope="col" style="width: 10%">Distance</th>
             <th scope="col" style="width: 20%">Max temp</th>
             <th scope="col" style="width: 20%">Min temp</th>
@@ -17,11 +17,20 @@
         </tr>
         </thead>
             <tbody>
-<!--                    <tr th:each="locationWeather: ${list}">-->
-<!--                        <td><h5 th:text="${locationWeather.location}" style="vertical-align: middle"></h5></td>-->
-<!--                        <td><h5 th:text="${locationWeather.temp} + ' °C'"></h5></td>-->
-<!--                        <td><h5 th:text="${locationWeather.description}"></h5></td>-->
-<!--                        <td><img th:src="'/css/weatherIcons/' + ${locationWeather.icon}" height="45"></td>-->
+                    <tr th:each="routeStats: ${results}">
+                        <td><h5 th:text="${routeStats.searchDate}" style="vertical-align: middle"></h5></td>
+                        <td><h5 th:text="${routeStats.start} + '   to   ' + ${routeStats.destination} " style="vertical-align: middle"></h5></td>
+                        <td><h5 th:text="${routeStats.distance}"></h5></td>
+                        <td><h5 th:text="${routeStats.maxTemp}"></h5></td>
+                        <td><h5 th:text="${routeStats.minTemp}"></h5></td>
+                        <td>
+                            <form class="form-inline my-2 my-lg-0"
+                                  th:object="${stats}"
+                                  th:action="@{/saveRoute}"
+                                  method="post">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SHOW ROUTE</button>
+                            </form>
+                        </td>
             </tbody>
     </table>
     </div>

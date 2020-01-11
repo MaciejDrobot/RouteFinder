@@ -30,6 +30,7 @@ public class RouteStats implements Serializable {
     private String distance;
     private String minTemp;
     private String maxTemp;
+    private String searchDate;
 
 
     public static RouteStats getRouteStats(MapsDTO route, List<LocationWeather> list) {
