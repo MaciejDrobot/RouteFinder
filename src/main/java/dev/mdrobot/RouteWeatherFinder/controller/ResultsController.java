@@ -32,11 +32,8 @@ public class ResultsController {
 
     @GetMapping
     @RequestMapping("/delete/{id}")
-    public String deleteRoute(@PathVariable("id") Long id, Model model) {
+    public String deleteRoute(@PathVariable("id") Long id) {
         repository.deleteById(id);
-        model.addAttribute("stats", new RouteStats());
-        List<RouteStats> list = repository.findAll();
-        model.addAttribute("results", list);
         return "redirect:/results";
     }
 
