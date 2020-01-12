@@ -30,3 +30,6 @@ FOR EACH ROW BEGIN
 SET new.created := now();
 END;
 $$
+
+//Hibernate configuration
+//jdbc:mysql://localhost:3306/dbname?useUnicode=yes&characterEncoding=UTF-8

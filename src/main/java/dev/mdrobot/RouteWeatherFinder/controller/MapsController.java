@@ -92,4 +92,6 @@ public class MapsController {
         repository.save(session.getStats());
         return "directions";
     }
+
+
 }

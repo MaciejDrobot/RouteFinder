@@ -1,5 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:spring="http://java.sun.com/xml/ns/javaee">
 
 <div id="results">
     <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -17,20 +17,26 @@
         </tr>
         </thead>
             <tbody>
+
                     <tr th:each="routeStats: ${results}">
                         <td><h5 th:text="${routeStats.searchDate}" style="vertical-align: middle"></h5></td>
                         <td><h5 th:text="${routeStats.start} + '   to   ' + ${routeStats.destination} " style="vertical-align: middle"></h5></td>
                         <td><h5 th:text="${routeStats.distance}"></h5></td>
                         <td><h5 th:text="${routeStats.maxTemp}"></h5></td>
                         <td><h5 th:text="${routeStats.minTemp}"></h5></td>
+<!--                        <td><a th:href="@{/delete/{id}(id=${routeStats.id})}">Delete</a></td>-->
                         <td>
-                            <form class="form-inline my-2 my-lg-0"
-                                  th:object="${stats}"
-                                  th:action="@{/saveRoute}"
-                                  method="post">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SHOW ROUTE</button>
+                            <form th:action="@{/delete/{id}(id=${routeStats.id})}">
+                                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Remove</button>
                             </form>
                         </td>
+<!--                        <td>-->
+<!--&lt;!&ndash;                            <form class="form-inline my-2 my-lg-0" th:object="${routeStats}" th:action="@{/routeDelete}" method="delete">&ndash;&gt;-->
+<!--                            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit"-->
+<!--                                    th:action="@{/delete/{id}(id=${routeStats.id})}">Remove</button>-->
+<!--                            </form>-->
+<!--                        </td>-->
+
             </tbody>
     </table>
     </div>
