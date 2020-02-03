@@ -4,9 +4,9 @@
       xmlns:th="http://www.thymeleaf.org">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns:th="http://www.w3.org/1999/xhtml">
     <div id="logo">
-     <div style="float: left"><img src="css/ico.png" style="height: 45px; width: 45px; margin-right: 5px"></div>
+     <div style="float: left"><img src="navbarIcons/ico.png" style="height: 45px; width: 45px; margin-right: 5px"></div>
      <div style="float: left"><a class="navbar-brand" style="font-size: 32px; font-weight: bold"> Route Weather Finder</a></div>
-     <div style="float: left"><img src="css/ico2.png" style="height: 45px; width: 45px; margin-right: 5px"></div>
+     <div style="float: left"><img src="navbarIcons/ico2.png" style="height: 45px; width: 45px; margin-right: 5px"></div>
     </div>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,12 +37,12 @@
 <!--            </li>-->
         </ul>
         <form class="form-inline my-2 my-lg-0"
-              th:object="${stats}"
+              th:object="${query}"
               th:action="@{/showRoute}"
               method="post">
 
             <input class="form-control mr-sm-2" type="text" th:field="*{start}" placeholder="Start" aria-label="Search">
-            <input class="form-control mr-sm-2" type="text" th:field="*{destination}" placeholder="End"  aria-label="Search">
+            <input class="form-control mr-sm-2" type="text" th:field="*{end}" placeholder="End"  aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>

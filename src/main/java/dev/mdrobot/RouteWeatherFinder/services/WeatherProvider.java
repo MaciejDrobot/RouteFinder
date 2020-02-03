@@ -1,6 +1,7 @@
 package dev.mdrobot.RouteWeatherFinder.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import dev.mdrobot.RouteWeatherFinder.dto.LocationWeather;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,14 +27,14 @@ public class WeatherProvider {
                 + WEATHER_API_KEY + "&";
     }
 
-    public WeatherDTO getWeather(String lat, String lon) {
+    public LocationWeather getWeather(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();
         String fullURL = weatherURL() + "lat=" + lat + "&lon=" + lon;
 
         HttpEntity<String> entity = createHttpEntity();
 
-        HttpEntity<WeatherDTO> response = restTemplate.exchange(fullURL, HttpMethod.GET, entity, WeatherDTO.class);
-        WeatherDTO body = response.getBody();
+        HttpEntity<LocationWeather> response = restTemplate.exchange(fullURL, HttpMethod.GET, entity, LocationWeather.class);
+        LocationWeather body = response.getBody();
 
         JsonNode weatherInfo = restTemplate.getForObject(fullURL, JsonNode.class);
         body.setTemp(weatherInfo.get("main").get("temp").asDouble());

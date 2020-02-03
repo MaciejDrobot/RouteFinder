@@ -15,10 +15,10 @@
         </thead>
             <tbody>
                     <tr th:each="locationWeather: ${list}">
-                        <td><h5 th:text="${locationWeather.location}" style="vertical-align: middle"></h5></td>
+                        <td><h5 th:text="${locationWeather.name}" style="vertical-align: middle"></h5></td>
                         <td><h5 th:text="${locationWeather.temp} + ' °C'"></h5></td>
                         <td><h5 th:text="${locationWeather.description}"></h5></td>
-                        <td><img th:src="'/css/weatherIcons/' + ${locationWeather.icon}" height="45"></td>
+                        <td><img th:src="'/weatherIcons/' + ${locationWeather.icon}" height="45"></td>
             </tbody>
     </table>
     </div>

@@ -1,9 +1,8 @@
 package dev.mdrobot.RouteWeatherFinder.services;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
-import dev.mdrobot.RouteWeatherFinder.model.LatLong;
-import dev.mdrobot.RouteWeatherFinder.model.MapsDTO;
+import dev.mdrobot.RouteWeatherFinder.dto.LatLong;
+import dev.mdrobot.RouteWeatherFinder.model.SearchedRoute;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,8 +18,6 @@ import java.util.List;
 @Service
 public class LocationsProvider {
 
-    private String start;
-    private String destination;
     @Value("${MAP_API_KEY}")
     private String MAP_API_KEY;
 
@@ -31,11 +28,11 @@ public class LocationsProvider {
                 + "&key=" + MAP_API_KEY;
     }
 
-    public MapsDTO getDirections(String start, String destination){
+    public SearchedRoute getLocations(String start, String destination){
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> entity = createHttpEntity();
-        MapsDTO route = new MapsDTO();
+        SearchedRoute searchedRoute = new SearchedRoute();
         List<LatLong> locationsList = new ArrayList<>();
 
         JsonNode locationInfo = restTemplate.getForObject(queryURL(start, destination), JsonNode.class);
@@ -50,14 +47,14 @@ public class LocationsProvider {
         }
         String startQuery = locationInfo.get("routes").get(0).get("legs").get(0).get("start_address").asText();
         List<String> startName = Arrays.asList(startQuery.split(","));
-        route.setStart(startName.get(0));
+        searchedRoute.setStart(startName.get(0));
         String destinationQuery = locationInfo.get("routes").get(0).get("legs").get(0).get("end_address").asText();
         List<String> destinationName = Arrays.asList(destinationQuery.split(","));
-        route.setDestination(destinationName.get(0));
-        route.setDistance(locationInfo.get("routes").get(0).get("legs").get(0).get("distance").get("text").asText());
-        route.setLocations(locationsList);
+        searchedRoute.setDestination(destinationName.get(0));
+        searchedRoute.setDistance(locationInfo.get("routes").get(0).get("legs").get(0).get("distance").get("text").asText());
+        searchedRoute.setListOfLocations(locationsList);
 
-        return route;
+        return searchedRoute;
     }
 
     private HttpEntity<String> createHttpEntity() {
