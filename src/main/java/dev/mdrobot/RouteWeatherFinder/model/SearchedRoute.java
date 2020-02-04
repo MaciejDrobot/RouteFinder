@@ -35,4 +35,6 @@ public class SearchedRoute {
 
     @Transient
     private List<LocationWeather> locationsWeather;
+
+
 }

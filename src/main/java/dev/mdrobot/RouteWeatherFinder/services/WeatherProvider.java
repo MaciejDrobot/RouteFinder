@@ -20,17 +20,22 @@ public class WeatherProvider {
     @Value("${HOME_LON}")
     double lon;
     @Value("${WEATHER_API_KEY}")
-    private String WEATHER_API_KEY;
+    String WEATHER_API_KEY;
 
     private String weatherURL() {
         return "http://api.openweathermap.org/data/2.5/weather?&units=metric&APPID="
                 + WEATHER_API_KEY + "&";
     }
 
-    public LocationWeather getWeather(String lat, String lon) {
-        RestTemplate restTemplate = new RestTemplate();
-        String fullURL = weatherURL() + "lat=" + lat + "&lon=" + lon;
+    public String testURL(String lat, String lon){
+        String fullURL = weatherURL();
+        return fullURL;
+    }
 
+    public LocationWeather getWeather(String lat, String lon) {
+
+        String fullURL = weatherURL() + "lat=" + lat + "&lon=" + lon;
+        RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> entity = createHttpEntity();
 
         HttpEntity<LocationWeather> response = restTemplate.exchange(fullURL, HttpMethod.GET, entity, LocationWeather.class);

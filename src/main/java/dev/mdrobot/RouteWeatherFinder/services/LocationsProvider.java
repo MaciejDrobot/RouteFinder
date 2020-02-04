@@ -28,6 +28,54 @@ public class LocationsProvider {
                 + "&key=" + MAP_API_KEY;
     }
 
+
+    public JsonNode getDirectionsResponse(String start, String end){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<String> entity = createHttpEntity();
+        JsonNode response = restTemplate.getForObject(queryURL(start, end), JsonNode.class);
+        return response;
+
+    }
+
+    public List<LatLong> getListOfLocations(JsonNode response){
+        SearchedRoute searchedRoute = new SearchedRoute();
+        List<LatLong> locationsList = new ArrayList<>();
+
+        int steps = response.get("routes").get(0).get("legs").get(0).get("steps").size();
+
+        for (int i = 0; i < steps; i++) {
+            LatLong location = new LatLong();
+            location.setLatitude(response.get("routes").get(0).get("legs").get(0).get("steps").get(i)
+                    .get("start_location").get("lat").asText());
+            location.setLongitude(response.get("routes").get(0).get("legs").get(0).get("steps").get(i)
+                    .get("start_location").get("lng").asText());
+            locationsList.add(location);
+        }
+        return locationsList;
+    }
+
+    public String getStartName(JsonNode response){
+        String startQuery = response.get("routes").get(0).get("legs").get(0).get("start_address").asText();
+        List<String> startName = Arrays.asList(startQuery.split(","));
+        return startName.get(0);
+
+    }
+
+    public String getDestinationName(JsonNode response){
+        String destinationQuery = response.get("routes").get(0).get("legs").get(0).get("end_address").asText();
+        List<String> destinationName = Arrays.asList(destinationQuery.split(","));
+        return destinationName.get(0);
+    }
+
+    public String getDistance(JsonNode response){
+        String distance = response.get("routes").get(0).get("legs").get(0).get("distance").get("text").asText();
+        return distance;
+    }
+
+
+
+
+//old method - all in one
     public SearchedRoute getLocations(String start, String destination){
 
         RestTemplate restTemplate = new RestTemplate();
@@ -45,17 +93,22 @@ public class LocationsProvider {
             location.setLongitude(locationInfo.get("routes").get(0).get("legs").get(0).get("steps").get(i).get("start_location").get("lng").asText());
             locationsList.add(location);
         }
+
         String startQuery = locationInfo.get("routes").get(0).get("legs").get(0).get("start_address").asText();
         List<String> startName = Arrays.asList(startQuery.split(","));
         searchedRoute.setStart(startName.get(0));
+
         String destinationQuery = locationInfo.get("routes").get(0).get("legs").get(0).get("end_address").asText();
         List<String> destinationName = Arrays.asList(destinationQuery.split(","));
         searchedRoute.setDestination(destinationName.get(0));
+
         searchedRoute.setDistance(locationInfo.get("routes").get(0).get("legs").get(0).get("distance").get("text").asText());
         searchedRoute.setListOfLocations(locationsList);
 
         return searchedRoute;
     }
+
+
 
     private HttpEntity<String> createHttpEntity() {
         HttpHeaders headers = new HttpHeaders();

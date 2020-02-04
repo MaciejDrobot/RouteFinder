@@ -29,10 +29,6 @@ public class MapsController {
     private String lat;
     @Value("${HOME_LON}")
     private String lon;
-    @Value("${WEATHER_API_KEY}")
-    private String WEATHER_API_KEY;
-
-
 
     public MapsController(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider,
                           LocationsWeatherProvider locationsWeatherProvider, SearchedRoute searchedRoute, LocationWeather locationWeather) {
@@ -46,7 +42,6 @@ public class MapsController {
     @GetMapping
     @RequestMapping("/home")
     public String showHomePage(@ModelAttribute WeatherProvider weatherProvider, Model model) {
-        System.out.println(WEATHER_API_KEY);
 
         LocationWeather homepageWeather = weatherProvider.getWeather(lat, lon);
         List<LocationWeather> initialWeather = Collections.singletonList(homepageWeather);
