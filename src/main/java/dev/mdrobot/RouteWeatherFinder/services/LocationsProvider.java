@@ -34,7 +34,6 @@ public class LocationsProvider {
         HttpEntity<String> entity = createHttpEntity();
         JsonNode response = restTemplate.getForObject(queryURL(start, end), JsonNode.class);
         return response;
-
     }
 
     public List<LatLong> getListOfLocations(JsonNode response){
@@ -58,7 +57,6 @@ public class LocationsProvider {
         String startQuery = response.get("routes").get(0).get("legs").get(0).get("start_address").asText();
         List<String> startName = Arrays.asList(startQuery.split(","));
         return startName.get(0);
-
     }
 
     public String getDestinationName(JsonNode response){
@@ -72,50 +70,11 @@ public class LocationsProvider {
         return distance;
     }
 
-
-
-
-//old method - all in one
-    public SearchedRoute getLocations(String start, String destination){
-
-        RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<String> entity = createHttpEntity();
-        SearchedRoute searchedRoute = new SearchedRoute();
-        List<LatLong> locationsList = new ArrayList<>();
-
-        JsonNode locationInfo = restTemplate.getForObject(queryURL(start, destination), JsonNode.class);
-
-        int steps = locationInfo.get("routes").get(0).get("legs").get(0).get("steps").size();
-
-        for (int i = 0; i < steps; i++) {
-            LatLong location = new LatLong();
-            location.setLatitude(locationInfo.get("routes").get(0).get("legs").get(0).get("steps").get(i).get("start_location").get("lat").asText());
-            location.setLongitude(locationInfo.get("routes").get(0).get("legs").get(0).get("steps").get(i).get("start_location").get("lng").asText());
-            locationsList.add(location);
-        }
-
-        String startQuery = locationInfo.get("routes").get(0).get("legs").get(0).get("start_address").asText();
-        List<String> startName = Arrays.asList(startQuery.split(","));
-        searchedRoute.setStart(startName.get(0));
-
-        String destinationQuery = locationInfo.get("routes").get(0).get("legs").get(0).get("end_address").asText();
-        List<String> destinationName = Arrays.asList(destinationQuery.split(","));
-        searchedRoute.setDestination(destinationName.get(0));
-
-        searchedRoute.setDistance(locationInfo.get("routes").get(0).get("legs").get(0).get("distance").get("text").asText());
-        searchedRoute.setListOfLocations(locationsList);
-
-        return searchedRoute;
-    }
-
-
-
     private HttpEntity<String> createHttpEntity() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         return new HttpEntity<>("parameters", headers);
     }
-
 
 }

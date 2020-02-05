@@ -5,9 +5,11 @@ import dev.mdrobot.RouteWeatherFinder.dto.RouteQuery;
 import dev.mdrobot.RouteWeatherFinder.model.SearchedRoute;
 import dev.mdrobot.RouteWeatherFinder.services.LocationsProvider;
 import dev.mdrobot.RouteWeatherFinder.services.LocationsWeatherProvider;
+import dev.mdrobot.RouteWeatherFinder.services.SearchedRouteProvider;
 import dev.mdrobot.RouteWeatherFinder.services.WeatherProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,7 @@ public class MapsController {
     private final LocationsWeatherProvider locationsWeatherProvider;
     private final SearchedRoute searchedRoute;
     private final LocationWeather locationWeather;
+    private final SearchedRouteProvider searchedRouteProvider;
 
     @Value("${HOME_LAT}")
     private String lat;
@@ -31,12 +34,13 @@ public class MapsController {
     private String lon;
 
     public MapsController(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider,
-                          LocationsWeatherProvider locationsWeatherProvider, SearchedRoute searchedRoute, LocationWeather locationWeather) {
+                          LocationsWeatherProvider locationsWeatherProvider, SearchedRoute searchedRoute, LocationWeather locationWeather, SearchedRouteProvider searchedRouteProvider) {
         this.locationsProvider = locationsProvider;
         this.weatherProvider = weatherProvider;
         this.locationsWeatherProvider = locationsWeatherProvider;
         this.searchedRoute = searchedRoute;
         this.locationWeather = locationWeather;
+        this.searchedRouteProvider = searchedRouteProvider;
     }
 
     @GetMapping
@@ -50,6 +54,21 @@ public class MapsController {
         model.addAttribute("list", initialWeather);
         model.addAttribute("query", new RouteQuery());
         return "index";
+    }
+
+    @PostMapping
+    @RequestMapping("/showRoute")
+    public String showRoute(@ModelAttribute RouteQuery routeQuery, Model model){
+        Session session = new Session();
+        SearchedRoute searchedRoute =
+                searchedRouteProvider.createSearchedRoute(routeQuery.getStart(), routeQuery.getEnd());
+        System.out.println(searchedRoute.toString());
+        model.addAttribute("searchedRoute", searchedRoute);
+        model.addAttribute("list", searchedRoute.getLocationsWeather());
+        model.addAttribute("start", routeQuery.getStart());
+        model.addAttribute("end", routeQuery.getEnd());
+        model.addAttribute("query", routeQuery);
+        return "directions";
     }
 
 //    @PostMapping

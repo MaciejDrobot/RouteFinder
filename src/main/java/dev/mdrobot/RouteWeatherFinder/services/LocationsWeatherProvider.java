@@ -34,8 +34,7 @@ public class LocationsWeatherProvider {
             locationWeather.setIcon(weatherProvider.getWeather(list.get(i).getLatitude(), list.get(i).getLongitude()).getIcon());
             locationsWeatherList.add(locationWeather);
         }
-        //return filterLocations(locationsWeatherList);
-        return locationsWeatherList;
+        return filterLocations(locationsWeatherList);
     }
 
     static List<LocationWeather> filterLocations(List<LocationWeather> list){
@@ -43,18 +42,6 @@ public class LocationsWeatherProvider {
                 .distinct(list, HashingStrategies.fromFunction(LocationWeather::getName));
         return uniqueLocations;
     }
-
-//    public List<LocationWeather> createInitialLocation(String lat, String lon){
-//        List<LocationWeather> list = new ArrayList<>();
-//        LocationWeather locationWeather = new LocationWeather();
-//        locationWeather.setLocation(weatherProvider.getWeather(lat, lon).getName());
-//        locationWeather.setTemp(String.valueOf(weatherProvider.getWeather(lat, lon).getTemp()));
-//        locationWeather.setDescription(weatherProvider.getWeather(lat, lon).getDescription());
-//        locationWeather.setIcon(weatherProvider.getWeather(lat, lon).getIcon());
-//        list.add(locationWeather);
-//        return list;
-//    }
-
 
 
 }
