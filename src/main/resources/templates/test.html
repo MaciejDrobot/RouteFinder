@@ -8,20 +8,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
 
-<div th:insert="fragments/navbar.html"></div>
+
 
 <div id="container">
 
-    <div th:insert="fragments/mapDirections.html"></div>
+    <a class="navbar-brand" th:text="${test}"></a>
+    <a class="navbar-brand" th:text="${test2}"></a>
 
-    <div th:insert="fragments/weather.html"></div>
+    <footer>
 
-    <div style="clear:both"></div>
-
-    <div th:insert="fragments/statsbar.html"></div>
+    </footer>
 
 </div>
 

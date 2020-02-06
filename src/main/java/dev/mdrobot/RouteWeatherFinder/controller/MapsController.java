@@ -3,13 +3,13 @@ package dev.mdrobot.RouteWeatherFinder.controller;
 import dev.mdrobot.RouteWeatherFinder.dto.LocationWeather;
 import dev.mdrobot.RouteWeatherFinder.dto.RouteQuery;
 import dev.mdrobot.RouteWeatherFinder.model.SearchedRoute;
+import dev.mdrobot.RouteWeatherFinder.model.SearchedRouteRepository;
 import dev.mdrobot.RouteWeatherFinder.services.LocationsProvider;
 import dev.mdrobot.RouteWeatherFinder.services.LocationsWeatherProvider;
 import dev.mdrobot.RouteWeatherFinder.services.SearchedRouteProvider;
 import dev.mdrobot.RouteWeatherFinder.services.WeatherProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +27,7 @@ public class MapsController {
     private final SearchedRoute searchedRoute;
     private final LocationWeather locationWeather;
     private final SearchedRouteProvider searchedRouteProvider;
+    private final SearchedRouteRepository repository;
 
     @Value("${HOME_LAT}")
     private String lat;
@@ -34,19 +35,19 @@ public class MapsController {
     private String lon;
 
     public MapsController(@Autowired LocationsProvider locationsProvider, WeatherProvider weatherProvider,
-                          LocationsWeatherProvider locationsWeatherProvider, SearchedRoute searchedRoute, LocationWeather locationWeather, SearchedRouteProvider searchedRouteProvider) {
+                          LocationsWeatherProvider locationsWeatherProvider, SearchedRoute searchedRoute, LocationWeather locationWeather, SearchedRouteProvider searchedRouteProvider, SearchedRouteRepository repository) {
         this.locationsProvider = locationsProvider;
         this.weatherProvider = weatherProvider;
         this.locationsWeatherProvider = locationsWeatherProvider;
         this.searchedRoute = searchedRoute;
         this.locationWeather = locationWeather;
         this.searchedRouteProvider = searchedRouteProvider;
+        this.repository = repository;
     }
 
     @GetMapping
     @RequestMapping("/home")
-    public String showHomePage(@ModelAttribute WeatherProvider weatherProvider, Model model) {
-
+    public String showHomePage(Model model) {
         LocationWeather homepageWeather = weatherProvider.getWeather(lat, lon);
         List<LocationWeather> initialWeather = Collections.singletonList(homepageWeather);
         model.addAttribute("latitude", lat);
@@ -59,10 +60,9 @@ public class MapsController {
     @PostMapping
     @RequestMapping("/showRoute")
     public String showRoute(@ModelAttribute RouteQuery routeQuery, Model model){
-        Session session = new Session();
         SearchedRoute searchedRoute =
                 searchedRouteProvider.createSearchedRoute(routeQuery.getStart(), routeQuery.getEnd());
-        System.out.println(searchedRoute.toString());
+        model.addAttribute("session", searchedRoute);
         model.addAttribute("searchedRoute", searchedRoute);
         model.addAttribute("list", searchedRoute.getLocationsWeather());
         model.addAttribute("start", routeQuery.getStart());
@@ -71,42 +71,15 @@ public class MapsController {
         return "directions";
     }
 
-//    @PostMapping
-//    @RequestMapping("/showRoute")
-//    public String showRoute(@ModelAttribute RouteStats route, Model model){
-//
-//        Session session = new Session();
-//
-//        //MapsDTO mapsDTO = locationsProvider.getDirections(route.getStart(), route.getDestination());
-////        List<LocationWeather> locationsWeatherList =
-////                locationsWeatherProvider.getLocationsWeather(mapsDTO.getLocations());
-////        List<LocationWeather> sorted = new ArrayList<>(locationsWeatherList);
-////        RouteStats stats = routeStats.getRouteStats(mapsDTO, sorted);
-//
-//        session.setStart(route.getStart());
-//        session.setEnd(route.getDestination());
-//        session.setLocationsWeatherList(locationsWeatherList);
-////        session.setStats(stats);
-//
-//        model.addAttribute("session", session);
-//        model.addAttribute("list", session.getLocationsWeatherList());
-//        model.addAttribute("stats", session.getStats());
-//        model.addAttribute("start", session.getStart());
-//        model.addAttribute("end", session.getEnd());
-//
-//        return "directions";
-//    }
-//
-//    @PostMapping
-//    @RequestMapping("/saveRoute")
-//    public String saveRoute(@ModelAttribute("session") Session session, Model model){
-//        model.addAttribute("list", session.getLocationsWeatherList());
-//        model.addAttribute("stats", session.getStats());
-//        model.addAttribute("start", session.getStart());
-//        model.addAttribute("end", session.getEnd());
-//        //repository.save(session.getStats());
-//        return "directions";
-//    }
-
-
+    @PostMapping
+    @RequestMapping("/saveRoute")
+    public String saveRoute(@ModelAttribute("session") SearchedRoute searchedRoute, RouteQuery routeQuery,Model model){
+        model.addAttribute("searchedRoute", searchedRoute);
+        model.addAttribute("list", searchedRoute.getLocationsWeather());
+        model.addAttribute("start", searchedRoute.getStart());
+        model.addAttribute("end", searchedRoute.getDestination());
+        model.addAttribute("query", routeQuery);
+        repository.save(searchedRoute);
+        return "directions";
+    }
 }

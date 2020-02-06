@@ -10,27 +10,27 @@
 
                 <div id="route">
                     <a class="navbar-brand">Route: </a>
-                    <a class="navbar-brand" th:text="${stats.start}"></a>
+                    <a class="navbar-brand" th:text="${searchedRoute.start}"></a>
                     <a class="navbar-brand"> to </a>
-                    <a class="navbar-brand" th:text="${stats.destination}"></a>
+                    <a class="navbar-brand" th:text="${searchedRoute.destination}"></a>
                 </div>
 
                 <div id="distance">
                     <a class="navbar-brand"> Distance: </a>
-                    <a class="navbar-brand" th:text="${stats.distance}"></a>
+                    <a class="navbar-brand" th:text="${searchedRoute.distance}"></a>
                 </div>
 
                 <div id="temperature">
                     <a class="navbar-brand"> Max temp: </a>
-                    <a class="navbar-brand" th:text="${stats.maxTemp}"></a>
+                    <a class="navbar-brand" th:text="${searchedRoute.maxTemp}"></a>
                     <a class="navbar-brand" style="margin-left: 25px"> Min temp: </a>
-                    <a class="navbar-brand" th:text="${stats.minTemp}"></a>
+                    <a class="navbar-brand" th:text="${searchedRoute.minTemp}"></a>
                 </div>
 
 
             </ul>
             <form class="form-inline my-2 my-lg-0"
-                  th:object="${stats}"
+                  th:object="${searchedRoute}"
                   th:action="@{/saveRoute}"
                   method="post">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SAVE ROUTE</button>

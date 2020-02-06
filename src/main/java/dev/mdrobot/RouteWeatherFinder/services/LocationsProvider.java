@@ -2,7 +2,6 @@ package dev.mdrobot.RouteWeatherFinder.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import dev.mdrobot.RouteWeatherFinder.dto.LatLong;
-import dev.mdrobot.RouteWeatherFinder.model.SearchedRoute;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +27,6 @@ public class LocationsProvider {
                 + "&key=" + MAP_API_KEY;
     }
 
-
     public JsonNode getDirectionsResponse(String start, String end){
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> entity = createHttpEntity();
@@ -37,7 +35,6 @@ public class LocationsProvider {
     }
 
     public List<LatLong> getListOfLocations(JsonNode response){
-        SearchedRoute searchedRoute = new SearchedRoute();
         List<LatLong> locationsList = new ArrayList<>();
 
         int steps = response.get("routes").get(0).get("legs").get(0).get("steps").size();

@@ -24,11 +24,6 @@ public class WeatherProvider {
                 + WEATHER_API_KEY + "&";
     }
 
-    public String testURL(String lat, String lon){
-        String fullURL = weatherURL();
-        return fullURL;
-    }
-
     public LocationWeather getWeather(String lat, String lon) {
 
         String fullURL = weatherURL() + "lat=" + lat + "&lon=" + lon;
