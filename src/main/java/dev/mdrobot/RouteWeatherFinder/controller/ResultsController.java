@@ -1,5 +1,6 @@
 package dev.mdrobot.RouteWeatherFinder.controller;
 
+import dev.mdrobot.RouteWeatherFinder.dto.RouteQuery;
 import dev.mdrobot.RouteWeatherFinder.model.SearchedRoute;
 import dev.mdrobot.RouteWeatherFinder.model.SearchedRouteRepository;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class ResultsController {
     @GetMapping
     @RequestMapping("/results")
     public String showHomePage(@ModelAttribute SearchedRoute searchedRoute, Model model) {
-        model.addAttribute("stats", new SearchedRoute());
+        model.addAttribute("query", new RouteQuery());
         List<SearchedRoute> list = repository.findAll();
         model.addAttribute("results", list);
         return "results";

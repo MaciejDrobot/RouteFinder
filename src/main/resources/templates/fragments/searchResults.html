@@ -18,15 +18,15 @@
         </thead>
             <tbody>
 
-                    <tr th:each="routeStats: ${results}">
-                        <td><h5 th:text="${routeStats.searchDate}" style="vertical-align: middle"></h5></td>
-                        <td><h5 th:text="${routeStats.start} + '   to   ' + ${routeStats.destination} " style="vertical-align: middle"></h5></td>
-                        <td><h5 th:text="${routeStats.distance}"></h5></td>
-                        <td><h5 th:text="${routeStats.maxTemp}"></h5></td>
-                        <td><h5 th:text="${routeStats.minTemp}"></h5></td>
+                    <tr th:each="searchedRoute: ${results}">
+                        <td><h5 th:text="${searchedRoute.searchDate}" style="vertical-align: middle"></h5></td>
+                        <td><h5 th:text="${searchedRoute.start} + '   to   ' + ${searchedRoute.destination} " style="vertical-align: middle"></h5></td>
+                        <td><h5 th:text="${searchedRoute.distance}"></h5></td>
+                        <td><h5 th:text="${searchedRoute.maxTemp}"></h5></td>
+                        <td><h5 th:text="${searchedRoute.minTemp}"></h5></td>
 <!--                        <td><a th:href="@{/delete/{id}(id=${routeStats.id})}">Delete</a></td>-->
                         <td>
-                            <form th:action="@{/delete/{id}(id=${routeStats.id})}">
+                            <form th:action="@{/delete/{id}(id=${searchedRoute.id})}">
                                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Remove</button>
                             </form>
                         </td>

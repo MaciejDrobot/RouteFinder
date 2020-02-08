@@ -59,27 +59,28 @@ public class MapsController {
 
     @PostMapping
     @RequestMapping("/showRoute")
-    public String showRoute(@ModelAttribute RouteQuery routeQuery, Model model){
-        SearchedRoute searchedRoute =
-                searchedRouteProvider.createSearchedRoute(routeQuery.getStart(), routeQuery.getEnd());
-        model.addAttribute("session", searchedRoute);
-        model.addAttribute("searchedRoute", searchedRoute);
-        model.addAttribute("list", searchedRoute.getLocationsWeather());
-        model.addAttribute("start", routeQuery.getStart());
-        model.addAttribute("end", routeQuery.getEnd());
-        model.addAttribute("query", routeQuery);
+    public String showRoute(@ModelAttribute RouteQuery rq, Model model){
+        SearchedRoute sr =
+                searchedRouteProvider.createSearchedRoute(rq.getStart(), rq.getEnd());
+        setModel(sr, rq, model);
         return "directions";
     }
 
     @PostMapping
     @RequestMapping("/saveRoute")
-    public String saveRoute(@ModelAttribute("session") SearchedRoute searchedRoute, RouteQuery routeQuery,Model model){
-        model.addAttribute("searchedRoute", searchedRoute);
-        model.addAttribute("list", searchedRoute.getLocationsWeather());
-        model.addAttribute("start", searchedRoute.getStart());
-        model.addAttribute("end", searchedRoute.getDestination());
-        model.addAttribute("query", routeQuery);
+    public String saveRoute(@ModelAttribute("session") SearchedRoute searchedRoute, RouteQuery rq,Model model){
+        setModel(searchedRoute, rq, model);
         repository.save(searchedRoute);
         return "directions";
+    }
+
+    public Model setModel(@ModelAttribute("session") SearchedRoute sr, RouteQuery rq, Model model) {
+        model.addAttribute("session", sr);
+        model.addAttribute("searchedRoute", sr);
+        model.addAttribute("list", sr.getLocationsWeather());
+        model.addAttribute("start", sr.getStart());
+        model.addAttribute("end", sr.getDestination());
+        model.addAttribute("query", rq);
+        return model;
     }
 }
