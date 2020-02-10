@@ -17,8 +17,13 @@ public class LocationWeather {
     public String name;
     public double lon;
     public double lat;
-    public double temp;
+    public String temp;
     public String description;
     public List[] end_location;
     public String icon;
+
+    public LocationWeather(String name, String temp){
+        this.name = name;
+        this.temp = temp;
+    }
 }

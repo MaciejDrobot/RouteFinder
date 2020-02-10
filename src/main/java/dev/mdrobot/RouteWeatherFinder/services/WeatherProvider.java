@@ -34,7 +34,7 @@ public class WeatherProvider {
         LocationWeather body = response.getBody();
 
         JsonNode weatherInfo = restTemplate.getForObject(fullURL, JsonNode.class);
-        body.setTemp(weatherInfo.get("main").get("temp").asDouble());
+        body.setTemp(weatherInfo.get("main").get("temp").asText());
         body.setName(weatherInfo.get("name").asText());
         body.setDescription(weatherInfo.get("weather").get(0).get("description").asText());
         body.setIcon(weatherInfo.get("weather").get(0).get("icon").asText() + ".png");
