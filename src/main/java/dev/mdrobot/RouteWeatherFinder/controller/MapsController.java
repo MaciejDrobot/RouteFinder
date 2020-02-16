@@ -59,28 +59,29 @@ public class MapsController {
 
     @PostMapping
     @RequestMapping("/showRoute")
-    public String showRoute(@ModelAttribute RouteQuery rq, Model model){
+    public String showRoute(RouteQuery rq, Model model){
         SearchedRoute sr =
                 searchedRouteProvider.createSearchedRoute(rq.getStart(), rq.getEnd());
         setModel(sr, rq, model);
         return "directions";
     }
 
-    @PostMapping
+    @GetMapping
     @RequestMapping("/saveRoute")
-    public String saveRoute(@ModelAttribute("session") SearchedRoute searchedRoute, RouteQuery rq,Model model){
+    public String saveRoute(@SessionAttribute("session") SearchedRoute searchedRoute, RouteQuery rq, Model model){
         setModel(searchedRoute, rq, model);
         repository.save(searchedRoute);
         return "directions";
     }
 
-    public Model setModel(@ModelAttribute("session") SearchedRoute sr, RouteQuery rq, Model model) {
+    public Model setModel(SearchedRoute sr, RouteQuery rq, Model model) {
         model.addAttribute("session", sr);
         model.addAttribute("searchedRoute", sr);
         model.addAttribute("list", sr.getLocationsWeather());
         model.addAttribute("start", sr.getStart());
         model.addAttribute("end", sr.getDestination());
         model.addAttribute("query", rq);
+
         return model;
     }
 }
