@@ -26,9 +26,12 @@
                         <td><h5 th:text="${searchedRoute.minTemp}"></h5></td>
 <!--                        <td><a th:href="@{/delete/{id}(id=${routeStats.id})}">Delete</a></td>-->
                         <td>
-                            <form th:action="@{/delete/{id}(id=${searchedRoute.id})}">
-                                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Remove</button>
-                            </form>
+
+                            <a th:href="@{/delete/{id}(id=${searchedRoute.id})}"
+                               class="btn btn-outline-danger my-2 my-sm-0" id="deleteButton">Delete</a>
+
+                        </td>
+
                         </td>
 <!--                        <td>-->
 <!--&lt;!&ndash;                            <form class="form-inline my-2 my-lg-0" th:object="${routeStats}" th:action="@{/routeDelete}" method="delete">&ndash;&gt;-->
